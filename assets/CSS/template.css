@@ -13,16 +13,11 @@
  background-color: lightgrey;
 }
 
-.jumbotron {
-
-}
-
-.jumbotron {
-
-}
-
-.jumbotron {
-
+.templateMainBody {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background-color: blue;
 }
 
 .footerBox {
