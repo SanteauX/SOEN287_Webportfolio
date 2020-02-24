@@ -5,3 +5,44 @@
   max-width: 100%;
   height: auto;
 }
+
+.indexMainBody{
+ display: flex;
+ height: 100vh;
+ width: 100%;
+ background-color: lightgrey;
+}
+
+.jumbotron {
+
+}
+
+.jumbotron {
+
+}
+
+.jumbotron {
+
+}
+
+.footerBox {
+  display: flex;
+  height: 12vh;
+  background-color: #282c34;
+  justify-content: center;
+  align-items: center;
+}
+.newsletterBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  width: 90%;
+}
+
+.textbox {
+  display: flex;
+  justify-content: center;
+  width: 300px;
+  justify-content: center;
+}
