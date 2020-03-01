@@ -58,18 +58,66 @@
         </li>
       </ul>
     </nav>
-    <div>
-      <div class="jumbotron" style="height: 100vh; margin-bottom: 0" ;>
-        {% block bodyTitle %}
-        <div class="container">
-          {% block body1 %} {% endblock %}
-          <!--SPACE FOR CLARITY-->
-          {% block body2 %} {% endblock %}
-          <!--SPACE FOR CLARITY-->
+    <div class="jumbotron">
+      {% block bodyTitle %} {% endblock %}
+      <div class="d-flex justify-content-around">
+        <div
+          class="jumbotron"
+          style="  border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+        >
+          {% block image %}
+          <!--PICTURE-->
+          {% endblock %}
         </div>
+        <div
+          class="jumbotron"
+          style="border-radius: 0; margin: 30px; background-color: white;"
+        >
+        {% block body1 %}
+        <!--TEXT-->
         {% endblock %}
-        <!--SPACE FOR CLARITY-->
       </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-around">
+        <div
+          class="jumbotron"
+          style="border-radius: 0; margin: 30px; background-color: white;"
+        >
+          {% block body2 %}
+          <!--TEXT-->
+          {% endblock %}
+        </div>
+        <div
+          class="jumbotron"
+          style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+        >
+          {% block image2 %}
+          <!--PICTURE-->
+          {% endblock %}
+        </div>
+      </div>
+      <div class="d-flex justify-content-around">
+        <div
+          class="d-flex align-items-center justify-content-center"
+          style="border-radius: 0; margin: 30px; background-color: white; min-width: 150px;"
+        >
+          {% block image3 %}
+          <!--TEXT-->
+          {% endblock %}
+        </div>
+        <div
+          class="jumbotron sub"
+          style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+        >
+          {% block body3 %}
+          <!--PICTURE-->
+          {% endblock %}
+        </div>
+      </div>
+      <!--SPACE FOR CLARITY-->
+
+      <!--SPACE FOR CLARITY-->
     </div>
 
     <footer class="footerBox">

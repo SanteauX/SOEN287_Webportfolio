@@ -1,14 +1,96 @@
-{% extends 'template.html' %}
-<!--  COMMENT  -->
-
-{% block head%}
+{% extends 'templateScroll.html' %}
+<!-- COMMENT -->
+{% block head %}
 <title>Skills</title>
-{% endblock%}
-<!--  COMMENT  -->
-
-{% block body%}
-<h1>Skills</h1>
-{%endblock%}
-
-<!--  COMMENT  -->
-{% endblock%}
+{% endblock %}
+<!-- COMMENT -->
+<!--COMMENT-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">Skills</h1>
+{% endblock %}
+<!-- COMMENT -->
+<!--COMMENT-->
+{% block body1 %}
+<div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+</div>
+{% endblock %}
+<!--COMMENT-->
+{% block image %}
+<img
+  src="{{ url_for('static', filename = 'img/skills/java.png') }}"
+  style="min-width: 150px; max-height: 400px;"
+  alt="logoJava"
+/>
+{% endblock %}
+<!-- COMMENT -->
+<!--COMMENT-->
+{% block body2 %}
+<div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+</div>
+{% endblock %}
+<!--COMMENT-->
+{% block image2 %}
+<img
+  src="{{ url_for('static', filename = 'img/skills/R.png') }}"
+  style="max-width: 95%; max-height: 400px;"
+  alt="logoR"
+/>
+{% endblock %}
+<!--COMMENT-->
+{% block body3 %}
+<div>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+  <p>
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est at temporibus
+    ut, quibusdam rerum ratione pariatur atque dolor, natus perspiciatis magni
+    ad eum id neque saepe nihil quasi, non velit.
+  </p>
+</div>
+{% endblock %}
+<!--COMMENT-->
+{% block image3 %}
+<img
+  src="{{ url_for('static', filename = 'img/skills/Python.png') }}"
+  style="max-width: 60%; min-width: 100px; max-height: 70vh"
+  alt="logoPython"
+/>
+{% endblock %} {% block body4 %}{% endblock %}
