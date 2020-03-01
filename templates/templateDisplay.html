@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     {% block head %} {% endblock %}
     <title>H. Joncour</title>
-
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -58,13 +57,14 @@
         </li>
       </ul>
     </nav>
-    <div class="jumbotron" style="height: 100vh; margin-bottom: 0" ;>
-      {% block bodyTitle %}{% endblock %}
-      <div class="d-flex justify-content-center align-items-center">
-        {% block body1 %} {% endblock %}
-        <!--SPACE FOR CLARITY-->
-        {% block body2 %} {% endblock %}
-        <!--SPACE FOR CLARITY-->
+    <div class="jumbotron">
+      <!--TITLE-->
+      {% block bodyTitle %} {% endblock %}
+      <!--TITLE-->
+      <div class="jumbotron">
+        {% block body1 %}
+        <!--TEXT-->
+        {% endblock %}
       </div>
     </div>
     <footer class="footerBox">

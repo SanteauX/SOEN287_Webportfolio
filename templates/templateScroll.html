@@ -59,11 +59,14 @@
       </ul>
     </nav>
     <div class="jumbotron">
+      <!--TITLE-->
       {% block bodyTitle %} {% endblock %}
+      <!--TITLE-->
+
       <div class="d-flex justify-content-around">
         <div
-          class="jumbotron"
-          style="  border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+        class="d-flex align-items-center justify-content-center"
+        style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
         >
           {% block image %}
           <!--PICTURE-->
@@ -71,55 +74,60 @@
         </div>
         <div
           class="jumbotron"
-          style="border-radius: 0; margin: 30px; background-color: white;"
+          style="border-radius: 0; margin: 30px; background-color: white; max-height: 70vh;"
         >
-        {% block body1 %}
-        <!--TEXT-->
-        {% endblock %}
-      </div>
+          {% block body1 %}
+          <!--TEXT-->
+          {% endblock %}
+        </div>
         </div>
       </div>
+      <!--BLOC-->
+      <!--BLOC-->
+      <!--BLOC-->
       <div class="d-flex justify-content-around">
         <div
           class="jumbotron"
-          style="border-radius: 0; margin: 30px; background-color: white;"
+          style="border-radius: 0; margin: 30px; background-color: white; max-height: 70vh;"
         >
           {% block body2 %}
           <!--TEXT-->
           {% endblock %}
         </div>
         <div
-          class="jumbotron"
-          style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+        class="d-flex align-items-center justify-content-center"
+        style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
         >
           {% block image2 %}
           <!--PICTURE-->
           {% endblock %}
         </div>
       </div>
+      <!--BLOC-->
+      <!--BLOC-->
+      <!--BLOC-->
       <div class="d-flex justify-content-around">
         <div
           class="d-flex align-items-center justify-content-center"
           style="border-radius: 0; margin: 30px; background-color: white; min-width: 150px;"
         >
           {% block image3 %}
-          <!--TEXT-->
+          <!--IMAGE-->
           {% endblock %}
         </div>
         <div
-          class="jumbotron sub"
-          style="border-radius: 0; margin: 30px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
+          class="jumbotron"
+          style="border-radius: 0; margin: 40px; background-color: white; max-width: 50%; min-width: 300px; max-height: 70vh"
         >
           {% block body3 %}
-          <!--PICTURE-->
+          <!--TEXT-->
           {% endblock %}
         </div>
       </div>
-      <!--SPACE FOR CLARITY-->
-
-      <!--SPACE FOR CLARITY-->
     </div>
-
+    <!--SPACE FOR CLARITY-->
+    <!--SPACE FOR CLARITY-->
+    <!--SPACE FOR CLARITY-->
     <footer class="footerBox">
       <div class="d-flex justify-content-center">
         <div>

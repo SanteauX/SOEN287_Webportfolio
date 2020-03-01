@@ -1,9 +1,25 @@
 {% extends 'template.html' %}
 <!-- COMMENT -->
-{% block head %}
-<title>Index</title>
+{% block bodyTitle %}
+<h1 class="display-4 text-center">Index</h1>
 {% endblock %}
 <!-- COMMENT -->
-{% block body %}
-<h1>Template</h1>
+{% block body1 %}
+<div>
+  <p>
+    You're not supposed to be here, this page isn't linked by any other on the
+    site !
+  </p>
+  <p>
+    Here are links to the pages of my website:
+  </p>
+  <ul>
+    <li><a href="home.html">Home</a></li>
+    <li><a href="whoami.html">Who I am</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</div>
 {% endblock %}
