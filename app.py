@@ -7,7 +7,7 @@ moi2="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/75307991_403491640541575_3
 moi3="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/66686768_343178196572920_1231752627142787072_o.jpg?_nc_cat=110&_nc_sid=0be424&_nc_ohc=KWby6lGEoXsAX-9YXFe&_nc_ht=scontent.fymq2-1.fna&oh=6b85e2bde7ca3586cd320d516bb176a6&oe=5EEF9D22"
 @app.route('/')
 def default():
-    return render_template("template.html")
+    return render_template("/home.html")
 
 @app.route('/index.html')
 def index():

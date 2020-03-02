@@ -1,20 +1,17 @@
-{% extends 'template.html' %}
-<!-- COMMENT -->
-
-{% block head %}
-<!-- COMMENT -->
-
+{% extends 'templateDisplay.html' %} {% block head %}
 <title>CV</title>
-<!-- COMMENT -->
-
 {% endblock %}
-<!-- COMMENT -->
+<!--COMMENT-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">CV</h1>
+{% endblock %}
+<!--COMMENT-->
+{% block body1 %}
+<div class="d-flex justify-content-center" style="margin-top: 20%;">
+  <button class="btn btn-primary">
+    <span class="spinner-border spinner-border-sm"></span>
+    This part of the website is still in construction
+  </button>
+</div>
 
-{% block body %}
-
-<!-- COMMENT -->
-
-<h1>My CV:</h1>
-
-<!-- COMMENT -->
 {% endblock %}
