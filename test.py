@@ -1,10 +1,14 @@
 import urllib
 
-url = 'https://api.github.com/users/SanteauX/repos'
-values = {'name' : 'Michael Foord',
-          'location' : 'Northampton',
-          'language' : 'Python' }
+class repo_github(object):
+    def __init__(self, name, url, id, descriptin):
+        self.name = name
+        self.url = url
+        self.id = id
+        self.description = description
+        self.username = usernam
 
-data = urllib.urlencode(url)
-data = data.encode('ascii') # data should be bytes
-print(data)
+url = 'https://api.github.com/users/SanteauX/repos'
+
+json_file = json.loads(your_json)
+u = repo_github(**j)
