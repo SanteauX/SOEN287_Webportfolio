@@ -5,6 +5,6 @@ values = {'name' : 'Michael Foord',
           'location' : 'Northampton',
           'language' : 'Python' }
 
-data = urllib.urlencode(values)
+data = urllib.urlencode(url)
 data = data.encode('ascii') # data should be bytes
 print(data)
