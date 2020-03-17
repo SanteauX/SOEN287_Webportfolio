@@ -1,7 +1,9 @@
 import urllib
 import json
+import unicodedata
 import requests
 
+# Class for the data scraped on my github repo
 class repo_github(object):
     def __init__(self, rank, name, url, language, created_at, full_name):
         self.rank = rank
@@ -30,36 +32,35 @@ class repo_github(object):
         return full_name
 
     def get_line(self):
-        stringy = str(self.rank) + ","
+        stringy = self.rank + "," + self.name + "," + self.url + "," + self.language + "," + self.created_at + "," + self.full_name + "\n"
         return stringy  
-        #stringy = self.rank + "," + self.name + "," + self.url + "," + self.language + "," + self.created_at + "," + self.full_name
-        #return stringy
-        
-    def test(self):
-        stringy = "name: " + self.name + ","
-        return stringy   
+
+# Scraping of my github repo
 
 url = "https://api.github.com/users/SanteauX/repos"
-
 response = urllib.urlopen(url)
 data = json.loads(response.read())
 liste = []
+
+i = 0
 for k in data:
-    rank = k
-    name = k["name"]
-    url = k["url"]
-    language = k["language"]
-    created_at = k["created_at"]
-    full_name = k["full_name"]
+#str(thing) for encoding reasons (u'String')
+    i = i+1
+    rank = str(i)
+    name = str(k["name"])
+    url = str(k["url"])
+    language = str(k["language"])
+    created_at = str(k["created_at"])
+    full_name = str(k["full_name"])
     github_repo = repo_github(rank, name, url, language, created_at, full_name)
     liste.append(github_repo)
-    #print(github_repo.test())
     print(github_repo.get_line())
+    print("\n")
 
 
 f = open("data/github_projects.csv", "w")
 f.write("rank, name, url, language, created_at, full_name \n" )
+
 for i in range(0, len(liste)):
-    comma = ","
-    #stringy = liste[i].get_rank() + comma + liste[i].get_name() + comma + liste[i].get_url() + comma, liste[i].get_language() + comma + liste[i].get_created_at() + comma + liste[i].get_full_name()
-    #print(stringy)
+    f.write(liste[i].get_line())
+    
