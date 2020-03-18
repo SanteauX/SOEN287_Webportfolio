@@ -1,6 +1,24 @@
 from flask import Flask, render_template, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////mnt/c/Users/hugo/Desktop/webportfolio/data/blog.db'
+db = SQLAlchemy(app)
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50))
+    subtitle = db.Column(db.String(50))
+    author = db.Column(db.String(50))
+    date_posted = db.Column(db.DateTime)
+    content = db.Column(db.Text)
+
+
+
 
 moi1 = "static/img/Me/moi.jpg"
 moi2 = "static/img/Me/moi2.jpg"
