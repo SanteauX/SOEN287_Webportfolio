@@ -1,5 +1,4 @@
 from flask import Flask, render_template, url_for
-import json
 
 app = Flask(__name__)
 
@@ -20,6 +19,14 @@ def default():
 @app.route('/index.html')
 def index():
     return render_template("index.html")
+
+@app.route('/post.html')
+def post():
+    return render_template("post.html")
+
+@app.route('/login.html')
+def login():
+    return render_template("login.html")
 
 @app.route('/home.html')
 def home():
@@ -43,8 +50,9 @@ def blog():
 @app.route('/projects.html')
 def projects():
     return render_template("projects.html",
-    lines=project_lines,
-    number=len(project_lines))
+    lines=project_lines[1:],
+    github_url="https://github.com/",
+    number=len(project_lines)-1)
 
 @app.route('/cv.html')
 def cv():

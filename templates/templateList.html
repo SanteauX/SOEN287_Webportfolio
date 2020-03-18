@@ -77,18 +77,38 @@
     <!----------------BODY--------------->
     <div
       class="jumbotron"
-      style="height: 100vh; margin-bottom: 0; margin-top: 54px;"
+      style="height: auto; margin-bottom: 0; margin-top: 54px;"
     >
+      <!-----------SPACE FOR CLARITY----------->
       {% block bodyTitle %}{% endblock %}
-      <div class="d-flex justify-content-center align-items-center">
-        {% block SubTitle %}{% endblock %}
-        <ul class="collection with-header">
-          {% for line in lines %}
-          <li class="collection-item">{{ line }}</li>
-          {% endfor %}
-        </ul>
+      <div class="d-flex justify-content-center align-items-center flex-column">
+        <p>{% block SubTitle %}{% endblock %}</p>
+        <table
+          class="table table-light table-striped table-hover table-responsive-md"
+        >
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Name</th>
+              <th>Language</th>
+              <th>Creation Date</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for line in lines %}
+            <tr>
+              {% for item in line[:4] %}
+              <td>{{ item }}</td>
+              {% endfor %} {% for item in line[4:] %}
+              <td><a href="{{ github_url+item }}"> {{ item }}</a></td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-      <!--SPACE FOR CLARITY-->
+      <!-----------SPACE FOR CLARITY----------->
     </div>
     <!---------------/BODY--------------->
     <!--------------FOOTER-------------->

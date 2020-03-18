@@ -34,7 +34,8 @@ class repo_github(object):
         return full_name
 
     def get_line(self):
-        stringy = self.rank + "," + self.name + "," + self.url + "," + self.language + "," + self.created_at + "," + self.full_name + "\n"
+        #stringy = self.rank + "," + self.name + "," + self.url + "," + self.language + "," + self.created_at + "," + self.full_name + "\n"
+        stringy = self.rank + "," + self.name + "," + self.language + "," + self.created_at + "," + self.full_name + "\n"
         return stringy  
 
 def scraping_github(url):
@@ -66,7 +67,8 @@ def obj_github(data):
 def write_csv(liste):
     # write data from github in data/github_projects.csv
     f = open("data/github_projects.csv", "w")
-    f.write("rank, name, url, language, created_at, full_name \n" )
+    #f.write("rank, name, url, language, created_at, full_name \n" )
+    f.write("rank, name, language, created_at, url \n" )
     for i in range(0, len(liste)):
         f.write(liste[i].get_line())
         
@@ -79,8 +81,4 @@ liste = obj_github(data)
 write_csv(liste)
 #test_lines(liste)
 
-projects = open("data/github_projects.csv")
-project_lines = projects.readlines()
-for i in range(0, len(project_lines)):
-    project_lines[i] = project_lines[i].split(",")
-    print(project_lines[i])
+

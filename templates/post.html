@@ -1,0 +1,21 @@
+{% extends 'template.html' %} {% block head %}
+<title>Post</title>
+{% endblock %}
+<!--COMMENT-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">Post</h1>
+{% endblock %}
+<!--COMMENT-->
+{% block body1 %}
+<div class="d-flex justify-content-around" style="background-color: white;">
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {{ post.content|safe }}
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+{% endblock %}
