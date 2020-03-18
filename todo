@@ -4,3 +4,8 @@ Finish:
   -Blog - Form
   -Login
 
+
+  <button class="btn btn-primary">
+    <span class="spinner-border spinner-border-sm"></span>
+    This part of the website is still in construction
+  </button>

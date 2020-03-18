@@ -1,13 +1,14 @@
 from flask import Flask, render_template, url_for
 import json
 
-json_data = '{"a": 1, "b": 2, "c": 3, "d": 4, "e": 5}'
-
 app = Flask(__name__)
 
-moi1="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/84984305_482770935946978_1289698118287228928_n.jpg?_nc_cat=106&_nc_sid=85a577&_nc_ohc=DdlM5FXPQowAX-WRLwk&_nc_ht=scontent.fymq2-1.fna&oh=c1ed3da00a2a393ebf1767707e2e465d&oe=5EF2255F"
-moi2="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/75307991_403491640541575_3558420597039955968_n.jpg?_nc_cat=109&_nc_sid=7aed08&_nc_ohc=FPILblfz9MgAX9fN41u&_nc_ht=scontent.fymq2-1.fna&oh=1e830374d29b1101e365e75d25881730&oe=5EF3F6F1"
-moi3="https://scontent.fymq2-1.fna.fbcdn.net/v/t1.0-9/66686768_343178196572920_1231752627142787072_o.jpg?_nc_cat=110&_nc_sid=0be424&_nc_ohc=KWby6lGEoXsAX-9YXFe&_nc_ht=scontent.fymq2-1.fna&oh=6b85e2bde7ca3586cd320d516bb176a6&oe=5EEF9D22"
+moi1 = "static/img/Me/moi.jpg"
+moi2 = "static/img/Me/moi2.jpg"
+moi3 = "static/img/Me/moi3.jpg"
+
+projects = open("data/github_projects.csv")
+project_lines = projects.readlines()
 
 @app.route('/')
 def default():
@@ -38,7 +39,8 @@ def blog():
 
 @app.route('/projects.html')
 def projects():
-    return render_template("projects.html")
+    return render_template("projects.html",
+    lines=project_lines)
 
 @app.route('/cv.html')
 def cv():

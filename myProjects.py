@@ -77,4 +77,10 @@ def test_lines(lines):
 data = scraping_github(url)
 liste = obj_github(data)
 write_csv(liste)
-test_lines(liste)
+#test_lines(liste)
+
+projects = open("data/github_projects.csv")
+project_lines = projects.readlines()
+for i in range(0, len(project_lines)):
+    project_lines[i] = project_lines[i].split(",")
+    print(project_lines[i])
