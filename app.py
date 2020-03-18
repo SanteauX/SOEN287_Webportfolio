@@ -9,6 +9,9 @@ moi3 = "static/img/Me/moi3.jpg"
 
 projects = open("data/github_projects.csv")
 project_lines = projects.readlines()
+for i in range(0, len(project_lines)):
+    project_lines[i] = project_lines[i].split(",")
+
 
 @app.route('/')
 def default():
@@ -40,7 +43,8 @@ def blog():
 @app.route('/projects.html')
 def projects():
     return render_template("projects.html",
-    lines=project_lines)
+    lines=project_lines,
+    number=len(project_lines))
 
 @app.route('/cv.html')
 def cv():

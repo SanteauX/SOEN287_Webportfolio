@@ -80,11 +80,15 @@
       style="height: 100vh; margin-bottom: 0; margin-top: 54px;"
     >
       {% block bodyTitle %}{% endblock %}
-        <div class="d-flex justify-content-center align-items-center">
-          {% block body1 %}{% endblock %}
-        </div>
-        <!--SPACE FOR CLARITY-->
+      <div class="d-flex justify-content-center align-items-center">
+        {% block SubTitle %}{% endblock %}
+        <ul class="collection with-header">
+          {% for line in lines %}
+          <li class="collection-item">{{ line }}</li>
+          {% endfor %}
+        </ul>
       </div>
+      <!--SPACE FOR CLARITY-->
     </div>
     <!---------------/BODY--------------->
     <!--------------FOOTER-------------->

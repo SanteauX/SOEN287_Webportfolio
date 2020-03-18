@@ -1,4 +1,4 @@
-{% extends 'templateDisplay.html' %} {% block head %}
+{% extends 'templateList.html' %} {% block head %}
 <title>Projects</title>
 {% endblock %}
 <!--COMMENT-->
@@ -6,11 +6,20 @@
 <h1 class="display-4 text-center">Projects</h1>
 {% endblock %}
 <!--COMMENT-->
+{% block SubTitle %}
+<p>Values from the list: {{ number }}</p>
+{% endblock %}
+<!--COMMENT-->
 {% block body1 %}
-<div class="d-flex justify-content-center" style="margin-top: 20%;">
-  <button class="btn btn-primary">
-    <span class="spinner-border spinner-border-sm"></span>
-    This part of the website is still in construction
-  </button>
+
+<div class="container">
+  <ul class ="colection with-header">
+
+    {% for line in project_lines %}
+      {% for element in line %}
+    <li>{{element[line]}}</li>
+    {% endfor %} {% endfor %}
+  </il>
 </div>
+
 {% endblock %}
