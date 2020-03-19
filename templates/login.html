@@ -1,18 +1,26 @@
-{% extends 'template.html' %} {% block head %}
-<title>Login</title>
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Login
 {% endblock %}
-<!--COMMENT-->
-{% block bodyTitle %}
-<h1 class="display-4 text-center">Login</h1>
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
 {% endblock %}
-<!--COMMENT-->
-{% block body1 %}
-<div class="d-flex justify-content-around" style="background-color: white;">
-  <div
-    class="d-flex flex-sm-wrap align-items-center justify-content-center"
-    style="border-radius: 0; margin: 30px; background-color: white; max-width: 70%; min-width: 300px; max-height: 70vh"
-  >
-    <p>Login</p>
-  </div>
-</div>
+
+{% block content %}
+    <div class="container">
+
+      <form class="form-signin" method="POST" action="/login">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.remember) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+
+    </div> <!-- /container -->
 {% endblock %}
