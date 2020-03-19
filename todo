@@ -3,7 +3,8 @@ Your forms should be handled properly, by defining a route accepting GET and POS
 and you should use the POST/REDIRECT/GET pattern when the form data validates (as shown in class).
 
 Your web site data should be stored in files, located in the data subfolder. 
-The data should in CSV or JSON formats. 
+The data should in CSV or JSON formats.
+
 Alternatively, you can store your data in an SQLite DB, also stored in the data subfolder,
 or in some other DB. Storing data in a database is optional.
 

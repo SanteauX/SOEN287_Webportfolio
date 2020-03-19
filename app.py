@@ -4,16 +4,16 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
-
-moi1 = "static/img/Me/moi.jpg"
-moi2 = "static/img/Me/moi2.jpg"
-moi3 = "static/img/Me/moi3.jpg"
+db = SQLAlchemy
 
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/hugo/Desktop/webportfolio/data/database.db'
 
 projects = open("data/github_projects.csv")
 project_lines = projects.readlines()
@@ -31,6 +31,13 @@ class LoginForm(FlaskForm):
     username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
     remember = BooleanField("Remember me")
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15), unique=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(80))
 
 
 @app.route('/')
@@ -52,7 +59,7 @@ def post():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return"<h1>"+form.username.data + " " + form.password.data + "</h1>"
+        return "<h1>" + form.username.data + " " + form.password.data + "</h1>"
     return render_template("login.html", form=form)
 
 
@@ -60,7 +67,7 @@ def login():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        return"<h1>"+form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
+        return "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
     return render_template("signup.html", form=form)
 
 
@@ -71,6 +78,9 @@ def home():
 
 @app.route('/whoami')
 def whoami():
+    moi1 = "static/img/Me/moi.jpg"
+    moi2 = "static/img/Me/moi2.jpg"
+    moi3 = "static/img/Me/moi3.jpg"
     return render_template("whoami.html",
                            image=moi1,
                            image2=moi2,
