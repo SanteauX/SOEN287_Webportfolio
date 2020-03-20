@@ -25,6 +25,7 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
     password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
+    
 
 
 class LoginForm(FlaskForm):
@@ -38,6 +39,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 
 @app.route('/')
