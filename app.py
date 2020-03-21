@@ -17,12 +17,31 @@ project_lines = projects.readlines()
 for i in range(0, len(project_lines)):
     project_lines[i] = project_lines[i].split(",")
 
+def register_user(username, email, password):
+    accounts = open("data/accounts.csv", "a+")
+    account_lines = accounts.readlines()
+    for i in range(0, len(account_lines)):
+        if username == account_lines[i][1] or email == account_lines[i][2]:
+            return "Account not created, username or email already exists"
+    id = 1000000+len(account_lines)
+    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)
+    account_lines.append(line)
+    return "Account created"
+
 
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
     password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
     
+    def get_email(self):
+        return email
+
+    def get_username(self):
+        return username
+    
+    def get_password(self):
+        return password
 
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
@@ -57,6 +76,7 @@ def login():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
+        print(register_user(form.get_username, form.get_email, form.get_password))
         return "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
     return render_template("signup.html", form=form)
 
