@@ -22,32 +22,26 @@ def register_user(username, email, password):
     account_lines = accounts.readlines()
     for i in range(0, len(account_lines)):
         line = account_lines[i].split(",")
-        print(account_lines[i][1] + " == " + username)
-        print(account_lines[i][2] + " == " + email)
-        if username == account_lines[i][1] or email == account_lines[i][2]:
-            return "Account not created, username or email already exists"
+        if username == line[1] or email == line[2]:
+            return False
     id = 1000000+len(account_lines)
     line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)+"\n"
     accounts.write(line)
-    return "Account created"
+    return True
 
-
+def login_user(username, password):
+    accounts = open("data/accounts.csv", "r")
+    account_lines = accounts.readlines()
+    for i in range(0, len(account_lines)):
+        line = account_lines[i].split(",")
+        if username == line[1]:
+            return True
+    return False
+    
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
     password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
-    print(email)
-    print(username)
-    print(password)
-    
-    def get_email(self):
-        return email
-
-    def get_username(self):
-        return username
-    
-    def get_password(self):
-        return password
 
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
@@ -74,7 +68,18 @@ def post():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        return "<h1>" + form.username.data + " " + form.password.data + "</h1>"
+        if(login_user(form.username.data, form.password.data)):
+            return render_template("formResponse.html",
+                                    title="Logged in",
+                                    bodyTitle="Welcome "+form.username.data,
+                                    link="/home",
+                                    page="home")
+        else:
+            return render_template("formResponse.html",
+                                    title="Login Error",
+                                    bodyTitle="Wrong username or password",
+                                    link="/login",
+                                    page="login")
     return render_template("login.html", form=form)
 
 
@@ -82,8 +87,12 @@ def login():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        print(register_user(form.username.data, form.email.data, form.password.data))
-        return "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
+        if(register_user(form.username.data, form.email.data, form.password.data)):
+            return render_template("formResponse.html")
+        else:
+            return "<h1> Account with this username or email already exists </h1>"
+    #                "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
+
     return render_template("signup.html", form=form)
 
 
@@ -91,6 +100,9 @@ def signup():
 def home():
     return render_template("home.html")
 
+@app.route('/formResponse')
+def response():
+    return render_template("formResponse.html")
 
 @app.route('/whoami')
 def whoami():

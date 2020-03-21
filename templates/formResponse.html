@@ -1,0 +1,11 @@
+{% extends 'template.html' %}
+<!--SPACE FOR CLARITY-->
+{% block head %} <title>{{ title }}</title>{% endblock %}
+<!--SPACE FOR CLARITY-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">{{ bodyTitle }}</h1>
+{% endblock %}
+<!--SPACE FOR CLARITY-->
+{% block body1 %}
+<a href="{{ link }}"><p>Click Here </a> to return to the {{ page }} Page</p>
+{% endblock %}
