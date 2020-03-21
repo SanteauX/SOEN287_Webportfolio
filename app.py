@@ -24,8 +24,8 @@ def register_user(username, email, password):
         if username == account_lines[i][1] or email == account_lines[i][2]:
             return "Account not created, username or email already exists"
     id = 1000000+len(account_lines)
-    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)
-    account_lines.append(line)
+    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)+"\n"
+    accounts.write(line)
     return "Account created"
 
 
@@ -76,7 +76,7 @@ def login():
 def signup():
     form = RegisterForm()
     if form.validate_on_submit():
-        print(register_user(form.get_username, form.get_email, form.get_password))
+        print(register_user(form.get_username(), form.get_email(), form.get_password()))
         return "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
     return render_template("signup.html", form=form)
 
