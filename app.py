@@ -34,7 +34,7 @@ def login_user(username, password):
     account_lines = accounts.readlines()
     for i in range(0, len(account_lines)):
         line = account_lines[i].split(",")
-        if username == line[1]:
+        if username == line[1] and password == line[3]:
             return True
     return False
     
@@ -48,7 +48,13 @@ class LoginForm(FlaskForm):
     password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
     remember = BooleanField("Remember me")
 
+class ContactForm(FlaskForm):
+    name = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
+    email = StringField("Email", validators = [InputRequired(), Email()])
+    title = StringField("Message", validators = [InputRequired(), Length(min=1, max=80)])
+    message = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
 
+    
 @app.route('/')
 def default():
     return render_template("/home.html")
@@ -107,10 +113,6 @@ def signup():
 def home():
     return render_template("home.html")
 
-@app.route('/formResponse')
-def response():
-    return render_template("formResponse.html")
-
 @app.route('/whoami')
 def whoami():
     moi1 = "static/img/Me/moi.jpg"
@@ -149,6 +151,13 @@ def cv():
 def contact():
     return render_template("contact.html")
 
+@app.route('/contactForm')
+def contactForm():
+    return render_template("/contactForm.html")
+
+@app.route('/templateForm')
+def templateForm():
+    return render_template("/templateForm.html")
 
 # app name
 @app.errorhandler(404)
