@@ -75,26 +75,11 @@
     </nav>
     <div
       class="jumbotron"
-      style="height: 95vh; margin-bottom: 0; margin-top: 54px;"
+      style="height: 100vh; margin-bottom: 0; margin-top: 54px;"
     >
-    {% block content %}
-    <div class="container">
-        <form class="form-signin" method="POST" action="/login">
-          <h2 class="form-signin-heading">Please sign in</h2>
-          {{ form.hidden_tag() }}
-          <!-- FOR CLARITY PURPOSE -->
-          {{ wtf.form_field(form.username) }}
-          <!-- FOR CLARITY PURPOSE -->
-          {{ wtf.form_field(form.password) }}
-          <!-- FOR CLARITY PURPOSE -->
-          {{ wtf.form_field(form.remember) }}
-          <button class="btn btn-lg btn-primary btn-block" type="submit">
-            Sign in
-          </button>
-        </form>
-      </div>
-      {% endblock %}
-      <footer class="footerBox">
+      {% block content %} {% endblock %}
+    </div>
+    <footer class="footerBox">
       <div class="d-flex justify-content-center">
         <div>
           <label style="color: white;"
