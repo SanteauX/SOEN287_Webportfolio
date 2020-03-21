@@ -88,10 +88,17 @@ def signup():
     form = RegisterForm()
     if form.validate_on_submit():
         if(register_user(form.username.data, form.email.data, form.password.data)):
-            return render_template("formResponse.html")
+            return render_template("formResponse.html",
+                                    title="Signed up",
+                                    bodyTitle="Welcome "+form.username.data,
+                                    link="/home",
+                                    page="home")
         else:
-            return "<h1> Account with this username or email already exists </h1>"
-    #                "<h1>" + form.username.data + " " + form.email.data + " " + form.password.data + "</h1>"
+            return render_template("formResponse.html",
+                                    title="Registration Error",
+                                    bodyTitle="Sorry, this email or username already exists ",
+                                    link="/signup",
+                                    page="registration")
 
     return render_template("signup.html", form=form)
 
