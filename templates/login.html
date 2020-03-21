@@ -1,26 +1,26 @@
 {% extends "bootstrap/base.html" %}
+<!-- FOR CLARITY PURPOSE -->
 {% import "bootstrap/wtf.html" as wtf %}
-
-{% block title %}
-Login
-{% endblock %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
-{% endblock %}
-
-{% block content %}
-    <div class="container">
-
-      <form class="form-signin" method="POST" action="/login">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        {{ form.hidden_tag() }}
-        {{ wtf.form_field(form.username) }}
-        {{ wtf.form_field(form.password) }}
-        {{ wtf.form_field(form.remember) }}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
+<!-- FOR CLARITY PURPOSE -->
+{% block title %} Login {% endblock %}
+<!-- FOR CLARITY PURPOSE -->
+{% block styles %} {{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}" />
+{% endblock %} {% block content %}
+<div class="container">
+  <form class="form-signin" method="POST" action="/login">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    {{ form.hidden_tag() }}
+    <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.username) }}
+    <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.password) }}
+    <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.remember) }}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      Sign in
+    </button>
+  </form>
+</div>
+<!-- FOR CLARITY PURPOSE -->
 {% endblock %}
