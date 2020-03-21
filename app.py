@@ -4,16 +4,13 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
-db = SQLAlchemy
-
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/hugo/Desktop/webportfolio/data/database.db'
+
 
 projects = open("data/github_projects.csv")
 project_lines = projects.readlines()
@@ -27,21 +24,10 @@ class RegisterForm(FlaskForm):
     password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
     
 
-
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
     remember = BooleanField("Remember me")
-
-
-class User(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(80))
-
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 
 @app.route('/')
