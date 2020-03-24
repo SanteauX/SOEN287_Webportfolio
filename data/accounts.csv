@@ -1,1 +1,2 @@
-id, username, email, phone, password
+username, email, phone, password
+TestTest,test@mail.com,78665789,$2b$12$XalWjRW8Ojp9EpHDhG0hheo9WyCj9nW/BpZ5hk6vzdnPBG4XYwZuG

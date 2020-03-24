@@ -1,6 +1,7 @@
 import os
 import bcrypt
-from flask import Flask, session, render_template, url_for
+import csv
+from flask import Flask, session, render_template, url_for, redirect, flash, request
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_wtf import FlaskForm
@@ -10,11 +11,13 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 ########################### CONFIG
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
 bootstrap = Bootstrap(app)
-#login_manager = LoginManager()
-#login_manager.init_app(app)
-SECRET_KEY = os.urandom(32)
-app.config['SECRET_KEY'] = SECRET_KEY
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+app.config['USE_SESSION_FOR_NEXT'] = True
+#SECRET_KEY = os.urandom(32)
 
 ########################### PROJECTS GITHUB
 projects = open("data/github_projects.csv")
@@ -24,7 +27,7 @@ for i in range(0, len(project_lines)):
 
 ########################### CLASSES ###########################
 class User(UserMixin):
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, phone, password):
         self.id = username
         self.email = email
         self.phone = phone
@@ -60,75 +63,42 @@ class ContactForm(FlaskForm):
 #######################################################################################################
 
 ########################### FUNCTIONS ###########################
-########################### CREATE AN ACCOUNT 
-def register_user(username, email, password):
-    accounts = open("data/accounts.csv", "r+")
-    account_lines = accounts.readlines()
-    for i in range(0, len(account_lines)):
-        line = account_lines[i].split(",")
-        if username == line[1] or email == line[2]:
-            return False
-    id = 1000000+len(account_lines)
-    salt = bcrypt.gensalt()
-    password = bcrypt.hashpw(password.encode(), salt)
-    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password.decode())+"\n"
-    accounts.write(line)
-    return True
 
-########################### LOG IN FUNCTION
-    def log_in_user(username, password):
-        accounts = open("data/accounts.csv", "r")
-        account_lines = accounts.readlines()
-        for i in range(0, len(account_lines)):
-            line = account_lines[i].split(",")
-            if username == line[1] and password == line[3]:
-                return True
-        return False
-
-########################### FIND USER
-def find_user(username):
-    accounts = open("data/accounts.csv", "r")
-    account_lines = accounts.readlines()
-    for i in range(0, len(account_lines)):
-        user = account_lines[i].split(",")
-        if username == user[1]:
-            return User(user[1], user[2], user[3])
-    return False
-
-
-########################### FIND USER
-def find_userZ(username):
-    with open('data/accounts.csv') as f:
-        for user in csv.reader(f):
-            if username == user[1]:
-                return User(*user)
-    return None
-
-
-
-
-########################### IF USER EXISTS: GET USER
+########################### USER LOADER
+# this is used by flask_login to get a user object for the current user
+@login_manager.user_loader
 def load_user(user_id):
     user = find_user(user_id)
     if user:
         user.password = None
-        return user
+    return user
 
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
+########################### FIND USER IN CSV
+def find_user(username):
+    with open('data/accounts.csv') as f:
+        for user in csv.reader(f):
+            if username == user[0]:
+                return User(*user)
+    return None
+
 #######################################################################################################
 #######################################################################################################
 
 ########################### ACCOUNT ROUTES ###########################
 
+########################### REGISTER
 @app.route('/signup', methods=['GET', 'POST'])
-def signup():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        if(register_user(form.username.data, form.email.data, form.password.data)):
+        user = find_user(form.username.data)
+        if not user:
+            salt = bcrypt.gensalt()
+            password = bcrypt.hashpw(form.password.data.encode(), salt)
+            with open('data/accounts.csv', 'a') as f:
+                writer = csv.writer(f)
+                writer.writerow([form.username.data, form.email.data, form.phone.data, password.decode()])
+        if not user:
             return render_template("formResponse.html",
                                     title="Signed up",
                                     bodyTitle="Welcome "+form.username.data,
@@ -142,7 +112,7 @@ def signup():
                                     page="registration")
     return render_template("signup.html", form=form)
 
-
+########################### LOG IN
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -161,7 +131,22 @@ def login():
                                     bodyTitle="Wrong username or password",
                                     link="/login",
                                     page="login")
-    return render_template("login.html", form=form)
+    return render_template('login.html', form=form)
+
+########################### LOG OUT
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    # flash(str(session))
+    return redirect('/')
+
+
+
+
+
+
+
 
 #User: VYTUBNJK
 #Password: ibuvyfUGYIBHJVUFGI
