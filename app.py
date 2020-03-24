@@ -1,22 +1,66 @@
 import os
-from flask import Flask, render_template, url_for
-from flask_bootstrap import Bootstrap
-from flask_wtf import FlaskForm
+import bcrypt
+from flask import Flask, session, render_template, url_for
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
+from flask_wtf import FlaskForm
+from flask_bootstrap import Bootstrap
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+
+########################### CONFIG
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
+#login_manager = LoginManager()
+#login_manager.init_app(app)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
 
-
+########################### PROJECTS GITHUB
 projects = open("data/github_projects.csv")
 project_lines = projects.readlines()
 for i in range(0, len(project_lines)):
     project_lines[i] = project_lines[i].split(",")
 
+########################### CLASSES ###########################
+class User(UserMixin):
+    def __init__(self, username, email, password):
+        self.id = username
+        self.email = email
+        self.phone = phone
+        self.password = password
+
+    
+class RegisterForm(FlaskForm):
+    username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
+    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    phone = StringField('phone', validators = [InputRequired(), Length(min=6, max = 15)])
+    password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
+
+
+class LoginForm(FlaskForm):
+    username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
+    password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
+    remember = BooleanField("Remember me")
+
+
+class ContactForm(FlaskForm):
+    name = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
+    email = StringField("Email", validators = [InputRequired(), Email()])
+    title = StringField("Message", validators = [InputRequired(), Length(min=1, max=80)])
+    message = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
+
+
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+
+########################### FUNCTIONS ###########################
+########################### CREATE AN ACCOUNT 
 def register_user(username, email, password):
     accounts = open("data/accounts.csv", "r+")
     account_lines = accounts.readlines()
@@ -25,69 +69,60 @@ def register_user(username, email, password):
         if username == line[1] or email == line[2]:
             return False
     id = 1000000+len(account_lines)
-    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)+"\n"
+    salt = bcrypt.gensalt()
+    password = bcrypt.hashpw(password.encode(), salt)
+    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password.decode())+"\n"
     accounts.write(line)
     return True
 
-def login_user(username, password):
+########################### LOG IN FUNCTION
+    def log_in_user(username, password):
+        accounts = open("data/accounts.csv", "r")
+        account_lines = accounts.readlines()
+        for i in range(0, len(account_lines)):
+            line = account_lines[i].split(",")
+            if username == line[1] and password == line[3]:
+                return True
+        return False
+
+########################### FIND USER
+def find_user(username):
     accounts = open("data/accounts.csv", "r")
     account_lines = accounts.readlines()
     for i in range(0, len(account_lines)):
-        line = account_lines[i].split(",")
-        if username == line[1] and password == line[3]:
-            return True
+        user = account_lines[i].split(",")
+        if username == user[1]:
+            return User(user[1], user[2], user[3])
     return False
-    
-class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
-    password = StringField('password', validators=[InputRequired(), Length(min=12, max=80)])
-
-class LoginForm(FlaskForm):
-    username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
-    remember = BooleanField("Remember me")
-
-class ContactForm(FlaskForm):
-    name = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
-    email = StringField("Email", validators = [InputRequired(), Email()])
-    title = StringField("Message", validators = [InputRequired(), Length(min=1, max=80)])
-    message = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
-
-    
-@app.route('/')
-def default():
-    return render_template("/home.html")
 
 
-@app.route('/index')
-def index():
-    return render_template("index.html")
+########################### FIND USER
+def find_userZ(username):
+    with open('data/accounts.csv') as f:
+        for user in csv.reader(f):
+            if username == user[1]:
+                return User(*user)
+    return None
 
 
-@app.route('/post')
-def post():
-    return render_template("post.html")
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if(login_user(form.username.data, form.password.data)):
-            return render_template("formResponse.html",
-                                    title="Logged in",
-                                    bodyTitle="Welcome "+form.username.data,
-                                    link="/home",
-                                    page="home")
-        else:
-            return render_template("formResponse.html",
-                                    title="Login Error",
-                                    bodyTitle="Wrong username or password",
-                                    link="/login",
-                                    page="login")
-    return render_template("login.html", form=form)
+########################### IF USER EXISTS: GET USER
+def load_user(user_id):
+    user = find_user(user_id)
+    if user:
+        user.password = None
+        return user
 
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+
+########################### ACCOUNT ROUTES ###########################
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -105,9 +140,56 @@ def signup():
                                     bodyTitle="Sorry, this email or username already exists ",
                                     link="/signup",
                                     page="registration")
-
     return render_template("signup.html", form=form)
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = find_user(form.username.data)
+        if user and bcrypt.checkpw(form.password.data.encode(), user.password.encode()):
+            login_user(user)
+            return render_template("formResponse.html",
+                                    title="Logged in",
+                                    bodyTitle="Welcome "+form.username.data,
+                                    link="/home",
+                                    page="home")
+        else:
+            return render_template("formResponse.html",
+                                    title="Login Error",
+                                    bodyTitle="Wrong username or password",
+                                    link="/login",
+                                    page="login")
+    return render_template("login.html", form=form)
+
+#User: VYTUBNJK
+#Password: ibuvyfUGYIBHJVUFGI
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+#######################################################################################################
+
+
+
+
+
+@app.route('/')
+def default():
+    return render_template("/home.html")
+
+
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
+@app.route('/post')
+@login_required
+def post():
+    return render_template("post.html")
 
 @app.route('/home')
 def home():

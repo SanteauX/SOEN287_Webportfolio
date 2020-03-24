@@ -1,5 +1,1 @@
-id, username, email, password
-1000001,Welson,hugo.joncour.k2o@gmail.com,AByrvXniU2rL
-1000002,Santeau,hugo.joncour.k2o@icloud.com,AByrvXniU2rL
-1000003,Chacha,hugo.joncour.k2o@test.com,KD9KAjVyb5wc
-1000004,ChachaFEscd,test@mailtest.com,KD9KAjVyb5wc
+id, username, email, phone, password
