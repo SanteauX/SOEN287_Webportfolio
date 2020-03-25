@@ -1,0 +1,23 @@
+{% extends 'template.html' %}
+<!-- COMMENT -->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">Index</h1>
+{% endblock %}
+<!-- COMMENT -->
+{% block body1 %}
+<div>
+  <p>
+    This is your main page:
+  </p>
+  <p>
+    Here are links to the pages of my website:
+  </p>
+  <ul>
+    <li><a href="home">Home</a></li>
+    <li><a href="myMessages">Your message box</a></li>
+    <li><a href="myBlog">Your blog posts</a></li>
+    <li><a href="post">Make a new blog post</a></li>
+    <li><a href="/logout">Log out</a></li>
+  </ul>
+</div>
+{% endblock %}

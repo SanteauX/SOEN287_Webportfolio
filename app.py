@@ -242,7 +242,7 @@ def projects():
     return render_template("projects.html",
                            lines=project_lines[1:],
                            url="https://github.com/",
-                           number=len(project_lines) - 1)
+                           number=len(project_lines))
 
 
 @app.route('/cv')
