@@ -15,11 +15,11 @@ def getMessages(username):
     messages = open("data/messages.csv", "r")
     message_lines = messages.readlines()
     messages_for_me = message_lines[0].split(",")
-    for i in range(0, len(message_lines)):
-        if message_lines[i][3] == username:
-            print(message_lines[i][3] + " ==  "+ username)
-            mm = message_lines[i].split(",")
-            messages_for_me.append(ml)
+    for i in range(1, len(message_lines)):
+        mm = message_lines[i].split(",")
+        print(mm[3] + " ==  "+ username)
+        if mm[3] == username:
+            messages_for_me.append(mm)
     return messages_for_me
 
 print(getMessages("TestTest"))

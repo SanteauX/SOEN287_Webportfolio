@@ -174,15 +174,25 @@ def protected():
 def myMessages():
     lines = getMessages(session['username'])
     number = len(lines) - 1
-    return render_template("myMessages.html", lines = lines, number = number)
+    return render_template("myMessages.html",
+                            lines = lines,
+                            number = number,
+                            url = "messenger.html/")
+
+@app.route('/message')
+@login_required
+def message():
+    return render_template("/messenge.html")
+
 
 def getMessages(username):
     messages = open("data/messages.csv", "r")
     message_lines = messages.readlines()
-    messages_for_me = message_lines[0].split(",")
+    messages_for_me = []
     for i in range(0, len(message_lines)):
-        if message_lines[i][3] == username:
-            messages_for_me.append(message_lines[i].split(","))
+        mm = message_lines[i].split(",")
+        if mm[3] == username:
+            messages_for_me.append(mm)
     return messages_for_me
 
 #######################################################################################################
@@ -238,7 +248,6 @@ def projects():
 @app.route('/cv')
 def cv():
     return render_template("cv.html")
-
 
 @app.route('/contact')
 def contact():
