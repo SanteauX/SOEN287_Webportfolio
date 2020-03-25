@@ -91,14 +91,13 @@
           <!----------------COLUMNS---------------->
           {% endblock %}
           <!-----------SPACE FOR CLARITY----------->
-
           <tbody>
             {% for line in lines %}
             <tr>
               {% for item in line[:4] %}
               <td>{{ item }}</td>
               {% endfor %} {% for item in line[4:] %}
-              <td><a href="{{ github_url+item }}"> {{ item }}</a></td>
+              <td><a href="{{ url+item }}"> {{ item }}</a></td>
               {% endfor %}
             </tr>
             {% endfor %}

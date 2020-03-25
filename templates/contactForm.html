@@ -9,7 +9,7 @@
 {% endblock %} {% block content %}
 <div class="container">
   <form class="form-signin" method="POST" action="/contactForm">
-    <h2 class="form-signin-heading">Log in</h2>
+    <h2 class="form-signin-heading">Send a message:</h2>
     {{ form.hidden_tag() }}
     <!-- FOR CLARITY PURPOSE -->
     {{ wtf.form_field(form.author) }}

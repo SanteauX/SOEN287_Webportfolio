@@ -43,10 +43,10 @@ class LoginForm(FlaskForm):
 
 
 class ContactForm(FlaskForm):
-    author = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
+    author = StringField("From", validators = [InputRequired(), Length(min=1, max=80)]) 
     email = StringField("Email", validators = [InputRequired(), Email()])
     for_ = StringField("For", validators = [InputRequired(), Length(min=1, max=80)])
-    title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
+    title = StringField("Subject", validators = [InputRequired(), Length(min=1, max=80)])
     content = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
 
 
@@ -179,10 +179,10 @@ def myMessages():
 def getMessages(username):
     messages = open("data/messages.csv", "r")
     message_lines = messages.readlines()
-    messages_for_me = message_lines[0]
+    messages_for_me = message_lines[0].split(",")
     for i in range(0, len(message_lines)):
         if message_lines[i][3] == username:
-            messages_for_me.append(message_lines[i])
+            messages_for_me.append(message_lines[i].split(","))
     return messages_for_me
 
 #######################################################################################################
@@ -231,7 +231,7 @@ def projects():
     project_lines = get_github_projects()
     return render_template("projects.html",
                            lines=project_lines[1:],
-                           github_url="https://github.com/",
+                           url="https://github.com/",
                            number=len(project_lines) - 1)
 
 

@@ -1,23 +1,28 @@
-def register_user(username, email, password):
-    accounts = open("data/accounts.csv", "r+")
-    account_lines = accounts.readlines()
-    print(len(accounts.readlines()))
-    for i in range(0, len(accounts.readlines())):
-        print(account_lines[i])
-        if username == account_lines[i][1] or email == account_lines[i][2]:
-            return "Account not created, username or email already exists"
-    id = 1000000+len(account_lines)
-    line = str(id) + "," + str(username) + "," + str(email) + "," + str(password)+"\n"
-    accounts.write(line)
-    return "Account created"
+########################### PROJECTS GITHUB
+def get_github_projects():
+    projects = open("data/github_projects.csv")
+    project_lines = projects.readlines()
+    for i in range(0, len(project_lines)):
+        project_lines[i] = project_lines[i].split(",")
+    return project_lines
 
-#print(register_user("Welson", "hugo.joncour.k2o@gmail.com", "dGpWLzejkt4P"))
+def myMessages():
+    lines = getMessages(session['username'])
+    number = len(lines) - 1
+    return render_template("myMessages.html", lines = lines, number = number)
+
+def getMessages(username):
+    messages = open("data/messages.csv", "r")
+    message_lines = messages.readlines()
+    messages_for_me = message_lines[0].split(",")
+    for i in range(0, len(message_lines)):
+        if message_lines[i][3] == username:
+            print(message_lines[i][3] + " ==  "+ username)
+            mm = message_lines[i].split(",")
+            messages_for_me.append(ml)
+    return messages_for_me
+
+print(getMessages("TestTest"))
 
 
-def test_accounts():
-    accounts = open("data/accounts.csv", "r+")
-    al = accounts.readlines()
-    for i in range(0, len(al)):
-        print(al[i])
-
-test_accounts()
+#print(get_github_projects())
