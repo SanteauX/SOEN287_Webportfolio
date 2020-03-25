@@ -1,6 +1,7 @@
 import os
 import bcrypt
 import csv
+from datetime import datetime
 from flask import Flask, session, render_template, url_for, redirect, flash, request
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
@@ -18,12 +19,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 app.config['USE_SESSION_FOR_NEXT'] = True
 #SECRET_KEY = os.urandom(32)
-
-########################### PROJECTS GITHUB
-projects = open("data/github_projects.csv")
-project_lines = projects.readlines()
-for i in range(0, len(project_lines)):
-    project_lines[i] = project_lines[i].split(",")
 
 ########################### CLASSES ###########################
 class User(UserMixin):
@@ -48,17 +43,13 @@ class LoginForm(FlaskForm):
 
 
 class ContactForm(FlaskForm):
-    name = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
+    author = StringField("Name", validators = [InputRequired(), Length(min=1, max=80)]) 
     email = StringField("Email", validators = [InputRequired(), Email()])
-    title = StringField("Message", validators = [InputRequired(), Length(min=1, max=80)])
-    message = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
+    for_ = StringField("For", validators = [InputRequired(), Length(min=1, max=80)])
+    title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
+    content = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
 
 
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
 #######################################################################################################
 #######################################################################################################
 
@@ -80,6 +71,35 @@ def find_user(username):
             if username == user[0]:
                 return User(*user)
     return None
+
+def create_message(author, email, for_, title, content):
+    print("enter messages")
+    messages = open("data/messages.csv", "r+")
+    message_lines = messages.readlines()
+    id = 1000000+len(message_lines)
+    line = str(id) + "," +str(author) + "," + str(email) + "," + str(for_) + "," + str(datetime.now()) + "," + str(title) + "," + str(content)+"\n"
+    messages.write(line)
+    print("write line: "+line)
+    return True
+
+
+def user_exists(user):
+    accounts = open("data/accounts.csv", "r")
+    account_lines = accounts.readlines()
+    for i in range(0, len(account_lines)):
+        line = account_lines[i].split(",")
+        if user == line[0]:
+            return True
+    return False
+
+
+########################### PROJECTS GITHUB
+def get_github_projects():
+    projects = open("data/github_projects.csv")
+    project_lines = projects.readlines()
+    for i in range(0, len(project_lines)):
+        project_lines[i] = project_lines[i].split(",")
+    return project_lines
 
 #######################################################################################################
 #######################################################################################################
@@ -117,6 +137,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        session['username'] = form.username.data
         user = find_user(form.username.data)
         if user and bcrypt.checkpw(form.password.data.encode(), user.password.encode()):
             login_user(user)
@@ -142,24 +163,30 @@ def logout():
     return redirect('/')
 
 
+@app.route('/account')
+@login_required
+def protected():
+    return render_template('protected.html')
 
 
+@app.route('/myMessages', methods =['GET', 'POST'])
+@login_required
+def myMessages():
+    lines = getMessages(session['username'])
+    number = len(lines) - 1
+    return render_template("myMessages.html", lines = lines, number = number)
 
+def getMessages(username):
+    messages = open("data/messages.csv", "r")
+    message_lines = messages.readlines()
+    messages_for_me = message_lines[0]
+    for i in range(0, len(message_lines)):
+        if message_lines[i][3] == username:
+            messages_for_me.append(message_lines[i])
+    return messages_for_me
 
-
-
-#User: VYTUBNJK
-#Password: ibuvyfUGYIBHJVUFGI
 #######################################################################################################
 #######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-#######################################################################################################
-
-
-
 
 
 @app.route('/')
@@ -190,7 +217,6 @@ def whoami():
                            image2=moi2,
                            image3=moi3)
 
-
 @app.route('/skills')
 def skills():
     return render_template("skills.html")
@@ -200,9 +226,9 @@ def skills():
 def blog():
     return render_template("blog.html")
 
-
 @app.route('/projects')
 def projects():
+    project_lines = get_github_projects()
     return render_template("projects.html",
                            lines=project_lines[1:],
                            github_url="https://github.com/",
@@ -218,15 +244,28 @@ def cv():
 def contact():
     return render_template("contact.html")
 
-@app.route('/contactForm')
+@app.route('/contactForm', methods=['GET', 'POST'])
 def contactForm():
-    return render_template("/contactForm.html")
+    form = ContactForm()
+    if form.validate_on_submit():
+        if user_exists(form.for_.data):
+            print("User exists")
+            message = create_message(form.author.data, form.email.data, form.for_.data, form.title.data, form.content.data)
+            return render_template("formResponse.html",
+                                    title="Message sent",
+                                    bodyTitle="Your message was sent to "+form.for_.data,
+                                    link="/contact",
+                                    page="contact")
+        else:
+            print("User doesn't exist")
+            return render_template("formResponse.html",
+                                        title="Error",
+                                        bodyTitle="Sorry, this user doesn't exist",
+                                        link="/signup",
+                                        page="registration")        
+    return render_template("/contactForm.html", form=form)
 
-@app.route('/templateForm')
-def templateForm():
-    return render_template("/templateForm.html")
 
-# app name
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", home="/home.html")

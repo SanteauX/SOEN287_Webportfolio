@@ -1,0 +1,36 @@
+{% extends 'templateList.html' %} {% block head %}
+<title>My Messages</title>
+{% endblock %}
+<!--COMMENT-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">My Messages</h1>
+{% endblock %}
+<!--COMMENT-->
+{% block SubTitle %}
+<p>{{ number }} Messages in your box</p>
+{% endblock %}
+<!--COMMENT-->
+{% block columns %}
+<thead>
+    <tr>
+      <th>ID</th>
+      <th>Subject</th>
+      <th>Author</th>
+      <th>Date</th>
+      <th>Creation Date</th>
+    </tr>
+  </thead>
+  
+  {% endblock %}{% block body1 %}
+
+<div class="container">
+  <ul class ="colection with-header">
+
+    {% for line in project_lines %}
+      {% for element in line %}
+    <li>{{element[line]}}</li>
+    {% endfor %} {% endfor %}
+  </il>
+</div>
+
+{% endblock %}
