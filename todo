@@ -4,9 +4,13 @@ and you should use the POST/REDIRECT/GET pattern when the form data validates (a
 
 Your web site data should be stored in files, located in the data subfolder. 
 The data should in CSV or JSON formats.
+--> accounts.csv
+--> blog_posts.csv
+--> github_projects.csv
+--> messages.csv
 
-Alternatively, you can store your data in an SQLite DB, also stored in the data subfolder,
-or in some other DB. Storing data in a database is optional.
+(Alternatively, you can store your data in an SQLite DB, also stored in the data subfolder,
+or in some other DB. Storing data in a database is optional)
 
 
 Your web site should contain:
@@ -14,10 +18,15 @@ Your web site should contain:
 At least 2 forms:
 with at least one of these forms which must be significantly different 
 from the ones included in the examples covered in class and in the tutorials.
+--> Signup
+--> Login
+--> ContactForm
+--> Post (blog)
 
 At least 1 table and at least 1 list created dynamically from data stored in a local file
 or a local SQLite DB (or some other DB). These pages can be, or not, directly connected to your forms.
-------------------> GITHUB PART/PROJECTS
+--> myMessages
+--> projects (github)
 
 
 A way to support user logins:
@@ -28,7 +37,7 @@ a registration page and/or if some features are limited to already created users
 Some pages should be protected and viewable by only the logged in users.
 There should be a way, in each page, to figure out if a user is logged in or not.
 You could have a special div in your base template that displays whether a user is logged in or not.
-------------------> LOGIN/BLOG
+--> Login
 
 
 At least 3 of the following features:
@@ -39,7 +48,7 @@ At least 3 of the following features:
   ------------------> BLOG POSTS
 
   A Forgot password page to help reset a user's lost password.
-
+  ------------------
   A search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
   
   Some other advanced feature, going beyond the basic examples presented in class and in the tutorials, including, but not limited to
