@@ -1,6 +1,7 @@
 import os
 import bcrypt
 import csv
+from pymongo import MongoClient
 from datetime import datetime
 from flask import Flask, session, render_template, url_for, redirect, flash, request
 from wtforms import StringField, PasswordField, BooleanField
@@ -18,8 +19,16 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 app.config['USE_SESSION_FOR_NEXT'] = True
-#SECRET_KEY = os.urandom(32)
 
+########################### DATABASE
+cluster = MongoClient("mongodb+srv://HugoAdmin:<yvctrd6F7GUYBVYT>@personalsite-3gjka.mongodb.net/test?retryWrites=true&w=majority")
+db = cluster['Site']
+collection = db['BlogPosts']
+
+post = {"_id": 0, "author": "Hugo Joncour", "date": "25/03/2020", "Title": "test", "Subtitle": "subtitle test", "tags": ["CS", "ECON"], "body": ["part 1", "part 2"], "images": ["image 1", "image 2"]}
+collection.insert_one(post)
+
+#id, date, author, tags, title, subtitle, content
 ########################### CLASSES ###########################
 class User(UserMixin):
     def __init__(self, username, email, phone, password):
