@@ -21,12 +21,6 @@ login_manager.login_view = 'login'
 app.config['USE_SESSION_FOR_NEXT'] = True
 
 ########################### DATABASE
-cluster = MongoClient("mongodb+srv://HugoAdmin:<yvctrd6F7GUYBVYT>@personalsite-3gjka.mongodb.net/test?retryWrites=true&w=majority")
-db = cluster['Site']
-collection = db['BlogPosts']
-
-post = {"_id": 0, "author": "Hugo Joncour", "date": "25/03/2020", "Title": "test", "Subtitle": "subtitle test", "tags": ["CS", "ECON"], "body": ["part 1", "part 2"], "images": ["image 1", "image 2"]}
-collection.insert_one(post)
 
 #id, date, author, tags, title, subtitle, content
 ########################### CLASSES ###########################
@@ -110,6 +104,20 @@ def get_github_projects():
         project_lines[i] = project_lines[i].split(",")
     return project_lines
 
+########################### STATISTICS
+def connection(username):
+    connections = open("data/connections.csv", "r+")
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    day = now.day
+    hour = now.hour
+    weekday = now.today().strftime('%A')
+    line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "," + str(find_user(username).id)+"\n"
+    connections.write(line)
+    print("write line: "+line)
+    return True
+
 #######################################################################################################
 #######################################################################################################
 
@@ -150,6 +158,7 @@ def login():
         user = find_user(form.username.data)
         if user and bcrypt.checkpw(form.password.data.encode(), user.password.encode()):
             login_user(user)
+            connection(form.username.data)
             return render_template("formResponse.html",
                                     title="Logged in",
                                     bodyTitle="Welcome "+form.username.data,
@@ -170,6 +179,8 @@ def logout():
     logout_user()
     # flash(str(session))
     return redirect('/')
+
+
 
 
 @app.route('/account')

@@ -3,8 +3,9 @@ from pymongo import MongoClient
 import ssl
 
 
-client = MongoClient("mongodb+srv://HugoAdmin:<yvctrd6F7GUYBVYT>@personalsite-3gjka.mongodb.net/test?retryWrites=true&w=majority", ssl_cert_reqs=ssl.CERT_NONE)
-db = client.test()
+client = MongoClient("mongodb+srv://admin:<admin>@personalsite-3gjka.mongodb.net/test?retryWrites=true&w=majority", ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
+db = client.test
+
 db = client['Site']
 
 collection = db['BlogPosts']
