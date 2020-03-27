@@ -106,14 +106,14 @@ def get_github_projects():
 
 ########################### STATISTICS
 def connection(username):
-    connections = open("data/connections.csv", "r+")
+    connections = open("data/connections.csv", "a+")
     now = datetime.now()
     year = now.year
     month = now.month
     day = now.day
     hour = now.hour
     weekday = now.today().strftime('%A')
-    line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "," + str(find_user(username).id)+"\n"
+    line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "\n"
     connections.write(line)
     print("write line: "+line)
     return True
