@@ -271,7 +271,8 @@ def statistics():
                             connections = connections,
                             accounts = users,
                             messages = messages,
-                            blog = blog_articles)
+                            blog = blog_articles,
+                            chartData = connection_chart2)
 
 @app.route('/post', methods=['GET', 'POST'])
 @login_required

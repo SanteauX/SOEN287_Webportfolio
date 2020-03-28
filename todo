@@ -9,33 +9,33 @@ The data should in CSV or JSON formats.
 --> github_projects.csv
 --> messages.csv
 
-(Alternatively, you can store your data in an SQLite DB, also stored in the data subfolder,
-or in some other DB. Storing data in a database is optional)
-
-
 Your web site should contain:
 
 At least 2 forms:
 with at least one of these forms which must be significantly different 
 from the ones included in the examples covered in class and in the tutorials.
---> Signup
---> Login
---> ContactForm
---> Post (blog)
+--> Signup          1
+--> Login           2
+--> ContactForm     3
+--> Post (blog)     4
 
 At least 1 table and at least 1 list created dynamically from data stored in a local file
 or a local SQLite DB (or some other DB). These pages can be, or not, directly connected to your forms.
---> myMessages
---> projects (github)
+--> myMessages          1
+--> projects (github)   2
 
 
 A way to support user logins:
 Note that logging in can be limited to administrators,
-thus there's no need to have a registration page (but you can have a registration page if you wish).
-Make sure you provide a valid username/password pair to allow using your web site if you don't have 
-a registration page and/or if some features are limited to already created users (such as admins). 
+
 Some pages should be protected and viewable by only the logged in users.
+--> messages
+--> account
+--> statistics
+
 There should be a way, in each page, to figure out if a user is logged in or not.
+xxxxxxxxxxxxx
+
 You could have a special div in your base template that displays whether a user is logged in or not.
 --> Login
 
@@ -45,26 +45,34 @@ At least 3 of the following features:
   JavaScript Ajax call(s) to dynamically load data from the server, and the server code to support it.
   
   Using a database instead of local files to store data.
-  ------------------> BLOG POSTS
+  XXXXXXXXXXXXXXXXXXXX> BLOG POSTS
+
 
   A Forgot password page to help reset a user's lost password.
-  ------------------XXXXX?PhoneNumber
+  XXXXXXXXXXXXXXXXXXXX> PhoneNumber
 
 
-  XXXXXXA search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
+  XXXXXXXXXXXXXXXXXXXX search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
   
   Some other advanced feature, going beyond the basic examples presented in class and in the tutorials, including, but not limited to
   
-      More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
+  More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
+  -----> Histogram Chart of connections in /statistics
       
-      A RESTful API for your web site
-  XXXXXUsing external APIs to connect to other web sites (like using the Facebook API for example)
+  A RESTful API for your web site
+  XXXXXXXXXXXXXXXXXXXX
 
-  XXXXXThe ability to send emails from your web site
+  Using external APIs to connect to other web sites (like using the Facebook API for example)
+  -----> Github
 
-      More advanced session mangement (tracking, user statistics, ...)
-  ------------------
-      Role-based access control or other more adbvanced user permissions management
+  The ability to send emails from your web site
+  XXXXXXXXXXXXXXXXXXXX
+
+  More advanced session mangement (tracking, user statistics, ...)
+  ------------------> Statistics includes connection/day of the week & connection/hour
+
+  Role-based access control or other more adbvanced user permissions management
+  ----> Only registered users are allowed to post on the blog section
 
 
 Submission:
@@ -75,5 +83,12 @@ Grading
 Total: 15 Points
 Grading Scheme
 Grading Criteria	Description	Points
-Demo	You will have to demo your web site to a TA. You will have to give an overview of your web site, go through the different pages, demo the features (log in, submit forms, additional features, etc...). You will also have to answer at least one question from the TA. Your answer(s) will be graded. Your demo, not counting the time for questions and answers, should take no more than 5 minutes.	8 points
+Demo	You will have to demo your web site to a TA. You will have to give an overview of your web site, go through the different pages, 
+demo the features:
+    -log in, 
+    -submit forms, 
+    -additional features, etc...)
+
+    You will also have to answer at least one question from the TA. Your answer(s) will be graded. Your demo, not counting the time for questions and answers, should take no more than 5 minutes.	
+    8 points
 Source Code	Code quality (running code, no bugs, documented code, code organization, ...). Good use of template inheritance and other Flask packages (WTForms, csv, ...). Project folder organization (subfolders, file naming, ...). All features implemented properly.	7 points
