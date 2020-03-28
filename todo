@@ -50,39 +50,42 @@ Your web site should contain:
 
 At least 3 of the following features:
 
+            I didn't do:
 
-            JavaScript input or form validation, using regular expressions where appropriate, on at least 2 forms.
-            JavaScript Ajax call(s) to dynamically load data from the server, and the server code to support it.
+                    JavaScript input or form validation, using regular expressions where appropriate, on at least 2 forms.
+                    
+                    JavaScript Ajax call(s) to dynamically load data from the server, and the server code to support it.
             
-            Using a database instead of local files to store data.
-            XXXXXXXXXXXXXXXXXXXX> BLOG POSTS
+                    Using a database instead of local files to store data.
+                    
+                    search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
+
+            I did:
+                    A Forgot password page to help reset a user's lost password.
+                    ------------------> Login -> Forgot password: Username + PhoneNumber + email --> Reset Password
+
+                    More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
+                    ------------------> Histogram Chart of connections in /statistics (uses Chart.JS)
 
 
-            A Forgot password page to help reset a user's lost password.
-            XXXXXXXXXXXXXXXXXXXX> PhoneNumber
-
-
-            XXXXXXXXXXXXXXXXXXXX search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
             
-            Some other advanced feature, going beyond the basic examples presented in class and in the tutorials, including, but not limited to
+Some other advanced feature, going beyond the basic examples presented in class and in the tutorials, including, but not limited to
             
-            More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
-            -----> Histogram Chart of connections in /statistics
-                
-            A RESTful API for your web site
-            XXXXXXXXXXXXXXXXXXXX
+            I didn't do:
 
-            Using external APIs to connect to other web sites (like using the Facebook API for example)
-            -----> Github
+                    A RESTful API for your web site
 
-            The ability to send emails from your web site
-            XXXXXXXXXXXXXXXXXXXX
+                    The ability to send emails from your web site
 
-            More advanced session mangement (tracking, user statistics, ...)
-            ------------------> Statistics includes connection/day of the week & connection/hour
+            I did:
+                    Using external APIs to connect to other web sites (like using the Facebook API for example)
+                    ------------------> Github
 
-            Role-based access control or other more adbvanced user permissions management
-            ----> Only registered users are allowed to post on the blog section
+                    More advanced session mangement (tracking, user statistics, ...)
+                    ------------------> /statistics includes connection/day of the week & connection/hour
+
+                    Role-based access control or other more adbvanced user permissions management
+                    ------------------> Only registered users are allowed to post on the blog section
 
 
 Submission:
