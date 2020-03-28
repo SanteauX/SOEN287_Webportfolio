@@ -20,6 +20,14 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 app.config['USE_SESSION_FOR_NEXT'] = True
 
+########################### DATE
+now = datetime.now()
+year = now.year
+month = now.month
+day = now.day
+hour = now.hour
+weekday = now.today().strftime('%A')
+
 #######################################################################################################
 #######################################################################################################
 
@@ -106,12 +114,6 @@ def get_github_projects():
 ########################### STATISTICS
 def connection(username):
     connections = open("data/connections.csv", "a+")
-    now = datetime.now()
-    year = now.year
-    month = now.month
-    day = now.day
-    hour = now.hour
-    weekday = now.today().strftime('%A')
     line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "\n"
     connections.write(line)
     print("write line: "+line)
@@ -202,6 +204,21 @@ def connection_chart2():
                 line2[j]+=1
     print(dayz)
     print(line2)
+
+
+def change_password(username, email, phone, password, passwordConfirmation):
+    accounts = open("data/accounts.csv", "r+")
+    account_lines = accounts.readlines()
+    for i in range(1, len(account_lines)):
+        line = account_lines[i].split(",")
+        print(line[0]+ " ==  " + username + "& "+ line[1] +" == "+ email+" & "+ line[2]+" == "+phone)
+        if(line[0] == username and line[1] == email and line[2] == phone and password == passwordConfirmation):
+            salt = bcrypt.gensalt()
+            password = bcrypt.hashpw(password.encode(), salt)
+            line[3] == password
+            return True
+    return False
+
 #######################################################################################################
 #######################################################################################################
 
@@ -218,7 +235,7 @@ def register():
             password = bcrypt.hashpw(form.password.data.encode(), salt)
             with open('data/accounts.csv', 'a') as f:
                 writer = csv.writer(f)
-                writer.writerow([form.username.data, form.email.data, form.phone.data, password.decode()])
+                writer.writerow([form.username.data, form.email.data, form.phone.data, password.decode(), day, month, year])
         if not user:
             return render_template("formResponse.html",
                                     title="Signed up",
@@ -269,24 +286,18 @@ def logout():
 def forgotPassword():
     form = resetPasswordForm()
     if form.validate_on_submit():
-        print("test")
-        accounts = open("data/accounts.csv", "r+")
-        account_lines = accounts.readlines()
-        print(len(account_lines))
-        for i in range(1, len(account_lines)):
-            line = account_lines[i].split(",")
-            print(line[0]+ " ==  " + form.username.data + "& "+ line[1] +" == "+ form.email.data+" & "+ line[2]+" == "+form.phone.data)
-            if(line[0] == form.username.data and line[1] == form.email.data and line[2] == form.phone.data and form.password.data == form.passwordConfirmation.data):
-                salt = bcrypt.gensalt()
-                password = bcrypt.hashpw(form.password.data.encode(), salt)
-                line[3] == password
-                return redirect('/login')
-        return render_template("formResponse.html",
+        if change_password(form.username.data, form.email.data, form.phone.data, form.password.data, form.passwordConfirmation.data):
+            return redirect('/login')
+        else:
+            return render_template("formResponse.html",
                             title="Reset password",
                             bodyTitle="Your identity couldn't be confirmed, we can't reset the password ",
                             link="/login",
                             page="login")
     return render_template("forgotPasswordForm.html", form=form)
+
+
+
 
 
 @app.route('/statistics')
