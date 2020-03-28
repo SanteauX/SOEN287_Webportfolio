@@ -31,6 +31,8 @@ class User(UserMixin):
         self.phone = phone
         self.password = password
 
+    def get_username(self):
+        return self.username
     
 class RegisterForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=50)])
@@ -53,6 +55,7 @@ class ContactForm(FlaskForm):
     content = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
 
 class PostForm(FlaskForm):
+    bloggername = StringField("Bloggername", validators = [InputRequired(), Length(min=1, max=80)])
     title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
     content = StringField("Subject", validators = [InputRequired(), Length(min=1, max=800000)])
 
@@ -209,7 +212,18 @@ def logout():
     # flash(str(session))
     return redirect('/')
 
-########################### LOG OUT
+@app.route('/statistics')
+@login_required
+def statistics():
+    users = how_many_users()
+    messages = how_many_messages()
+    connections = how_many_connections()
+    return render_template('statistics.html', 
+                            connections = connections,
+                            accounts = users,
+                            messages = messages)
+
+########################### ACCOUNT
 @app.route('/account')
 @login_required
 def account():
@@ -226,12 +240,14 @@ def myMessages():
                             number = number,
                             url = "messenger.html/")
 
+########################### MESSAGES
+
 @app.route('/post', methods =['GET', 'POST'])
 @login_required
 def post():
     form = PostForm()
     if form.validate_on_submit():
-        create_blog_post(self.username, datetime.now().day, datetime.now().month, datetime.now().year, form.title.data, form.content.data)
+        create_blog_post(form.bloggername.data, datetime.now().day, datetime.now().month, datetime.now().year, form.title.data, form.content.data)
         return render_template("formResponse.html",
                             title="Blog article posted",
                             bodyTitle="Your blog article was posted ",
@@ -279,7 +295,6 @@ def getMessages(username):
 @app.route('/')
 def default():
     return render_template("/home.html")
-
 
 @app.route('/index')
 def index():

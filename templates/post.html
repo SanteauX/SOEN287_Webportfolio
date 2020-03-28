@@ -12,6 +12,8 @@
     <h2 class="form-signin-heading">Post a blog article:</h2>
     {{ form.hidden_tag() }}
     <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.bloggername) }}
+    <!-- FOR CLARITY PURPOSE -->
     {{ wtf.form_field(form.title) }}
     <!-- FOR CLARITY PURPOSE -->
     {{ wtf.form_field(form.content) }}

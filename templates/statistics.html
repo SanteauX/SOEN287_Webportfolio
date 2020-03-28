@@ -1,0 +1,24 @@
+{% extends 'templateDisplay.html' %}
+<!-- FOR CLARITY PURPOSE -->
+{% block head %} <title>Statistics & Metrics</title> {% endblock %}
+<!-- FOR CLARITY PURPOSE -->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">Statistics & Metrics</h1>
+{% endblock %}
+<!-- COMMENT -->
+{% block body1 %}
+<div>
+  <p>
+    Statistics:
+  </p>
+  <ul>
+    <li>How many connections in total: {{ connections }}</li>
+    <li>How many accounts created: {{ accounts }}</li>
+    <li>How mnay messages sent: {{ messages }}</li>
+    <!-- 
+            <li>How many blog articles published: {{ blog }}</li>
+
+     -->
+  </ul>
+</div>
+{% endblock %}
