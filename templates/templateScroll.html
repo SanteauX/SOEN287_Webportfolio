@@ -161,6 +161,11 @@
           </form>
         </div>
       </div>
+      <div style="margin-left: 40px; color: purple">
+        {% if current_user.is_authenticated %}
+        <p>You are connected as {{ current_user.id }}!</p>
+        {% endif %}
+      </div>
     </footer>
   </body>
 </html>

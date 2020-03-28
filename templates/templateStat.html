@@ -73,7 +73,6 @@
         </ul>
       </div>
     </nav>
-
     <div
       class="jumbotron"
       style="height: auto; margin-bottom: 0; margin-top: 54px;"
@@ -92,6 +91,7 @@
         {% block canvas1 %} {% endblock %}
       </div>
     </div>
+
     <footer class="footerBox">
       <div class="d-flex justify-content-center">
         <div>
@@ -110,6 +110,11 @@
             </button>
           </form>
         </div>
+      </div>
+      <div style="margin-left: 40px; color: purple">
+        {% if current_user.is_authenticated %}
+        <p>You are connected as {{ current_user.id }}!</p>
+        {% endif %}
       </div>
     </footer>
   </body>
