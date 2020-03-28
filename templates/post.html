@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}" />
 {% endblock %} {% block content %}
 <div class="container">
-  <form class="form-signin" method="POST" action="/login">
+  <form class="form-signin" method="POST" action="/post">
     <h2 class="form-signin-heading">Post a blog article:</h2>
     {{ form.hidden_tag() }}
     <!-- FOR CLARITY PURPOSE -->

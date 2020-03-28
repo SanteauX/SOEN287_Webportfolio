@@ -3,7 +3,7 @@ const parse = require("csv-parse");
 
 const csvData = [];
 
-fs.createReadStream(__dirname + "/data/connections.csv")
+fs.createReadStream("./data/connections.csv")
   .pipe(parse({ delimiter: "," }))
   .on("data", function(dataRow) {
     csvData.push(dataRow);

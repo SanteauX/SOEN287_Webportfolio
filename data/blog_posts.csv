@@ -1,1 +1,3 @@
 id, author, day, month, year, tags, title, content
+1000001,Input,29,3,1997,Naissance,Wesh wesh
+1000002,TestTest,<attribute 'day' of 'datetime.date' objects>,<attribute 'month' of 'datetime.date' objects>,<attribute 'year' of 'datetime.date' objects>,TestTestTestTestTestTestTestTest,TestTestTestTestTestTestTestTestTestTestTestTestTestTest

@@ -141,11 +141,11 @@ def create_message(author, email, for_, title, content):
 ######################### CREATE A BLOG ARTICLE
 def create_blog_post(author, day, month, year, title, content):
     print("create blog post")
-    posts = open("blog_posts.csv", "r+")
-    post_lines = post.readlines()
+    posts = open("data/blog_posts.csv", "r+")
+    post_lines = posts.readlines()
     id = 1000000+len(post_lines)
-    print("id: "+id)
-    line = str(id) + "," +str(flask_login.current_user.username) + "," + str(day) + "," + str(month) + "," + str(year) + "," + str(title) + "," + str(content)+"\n"
+    print("id: "+str(id))
+    line = str(id) + "," +str(author) + "," + str(day) + "," + str(month) + "," + str(year) + "," + str(title) + "," + str(content)+"\n"
     print("write line: "+line)
     posts.write(line)
     return True
@@ -244,6 +244,18 @@ def statistics():
                             accounts = users,
                             messages = messages)
 
+@app.route('/post', methods=['GET', 'POST'])
+def post():
+    form = PostForm()
+    if form.validate_on_submit():
+        create_blog_post(form.bloggername.data, datetime.day, datetime.month, datetime.year, form.title.data, form.content.data)
+        return render_template("formResponse.html",
+                            title="Blog article posted",
+                            bodyTitle="Your blog article was posted ",
+                            link="/blog",
+                            page="blog")
+    return render_template("/post.html", form=form)
+
 ########################### ACCOUNT
 @app.route('/account')
 @login_required
@@ -261,21 +273,7 @@ def myMessages():
                             number = number,
                             url = "messenger.html/")
 
-########################### MESSAGES
-
-@app.route('/post', methods =['GET', 'POST'])
-@login_required
-def post():
-    form = PostForm()
-    if form.validate_on_submit():
-        create_blog_post(form.bloggername.data, datetime.now().day, datetime.now().month, datetime.now().year, form.title.data, form.content.data)
-        return render_template("formResponse.html",
-                            title="Blog article posted",
-                            bodyTitle="Your blog article was posted ",
-                            link="/blog",
-                            page="blog")
-    return render_template("/post.html", form=form)
-
+########################### MESSAGE SOMEBODY
 @app.route('/contactForm', methods=['GET', 'POST'])
 def contactForm():
     form = ContactForm()
