@@ -65,16 +65,26 @@
     <li>How many connections in total: {{ connections }}</li>
     <li>How many accounts created: {{ accounts }}</li>
     <li>How many messages sent: {{ messages }}</li>
-    <!-- 
-            <li>How many blog articles published: {{ blog }}</li>
-
-     -->
+    <li>How many blog articles published: {{ blog }}</li>
   </ul>
 </div>
 {% endblock %}
 <!-- FOR CLARITY PURPOSE -->
 {% block canvas1 %}
 <canvas id="myChart" width="400" height="400"></canvas>
-{% endblock %} {% block canvas2 %}
+{% endblock %}
+<!-- FOR CLARITY PURPOSE -->
+{% block canvas2 %}
 <canvas id="myChart" width="400" height="400"></canvas>
 {% endblock %}
+
+<script>
+  var ctx = ctx.document.getElementById("graph1").getContext("2d");
+  var data;
+  var options;
+  var config = {
+    type: "line",
+    data: data,
+    options: options
+  };
+</script>

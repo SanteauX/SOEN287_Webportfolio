@@ -128,6 +128,11 @@ def how_many_connections():
     connection_line = connections.readlines()
     return len(connection_line)-1
 
+def how_many_blog_articles():
+    blog_articles = open("data/blog_posts.csv")
+    blog_article_lines = blog_articles.readlines()
+    return len(blog_article_lines)-1
+
 def create_message(author, email, for_, title, content):
     print("enter messages")
     messages = open("data/messages.csv", "r+")
@@ -144,7 +149,10 @@ def create_blog_post(author, day, month, year, title, content):
     posts = open("data/blog_posts.csv", "r+")
     post_lines = posts.readlines()
     id = 1000000+len(post_lines)
-    print("id: "+str(id))
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    day = now.day
     line = str(id) + "," +str(author) + "," + str(day) + "," + str(month) + "," + str(year) + "," + str(title) + "," + str(content)+"\n"
     print("write line: "+line)
     posts.write(line)
@@ -239,12 +247,15 @@ def statistics():
     users = how_many_users()
     messages = how_many_messages()
     connections = how_many_connections()
+    blog_articles = how_many_blog_articles()
     return render_template('statistics.html', 
                             connections = connections,
                             accounts = users,
-                            messages = messages)
+                            messages = messages,
+                            blog = blog_articles)
 
 @app.route('/post', methods=['GET', 'POST'])
+@login_required
 def post():
     form = PostForm()
     if form.validate_on_submit():
