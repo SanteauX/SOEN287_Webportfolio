@@ -48,20 +48,23 @@ At least 3 of the following features:
   ------------------> BLOG POSTS
 
   A Forgot password page to help reset a user's lost password.
-  ------------------
-  A search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
+  ------------------XXXXX?PhoneNumber
+
+
+  XXXXXXA search page (or possibly a div in a block shared among your templates) to search for something interesting on your site (for example, search for some blog posts).
   
   Some other advanced feature, going beyond the basic examples presented in class and in the tutorials, including, but not limited to
   
-  More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
-  
-  A RESTful API for your web site
-  Using external APIs to connect to other web sites (like using the Facebook API for example)
+      More advanced user interface (more professional design, with animations, ... , using external JS libraries or other tricks)
+      
+      A RESTful API for your web site
+  XXXXXUsing external APIs to connect to other web sites (like using the Facebook API for example)
 
-  The ability to send emails from your web site
+  XXXXXThe ability to send emails from your web site
 
-  More advanced session mangement (tracking, user statistics, ...)
-  Role-based access control or other more adbvanced user permissions management
+      More advanced session mangement (tracking, user statistics, ...)
+  ------------------
+      Role-based access control or other more adbvanced user permissions management
 
 
 Submission:

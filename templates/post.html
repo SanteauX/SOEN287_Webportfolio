@@ -1,16 +1,25 @@
-{% extends 'template.html' %} {% block head %}
-<title>Post</title>
-{% endblock %}
-<!--COMMENT-->
-{% block bodyTitle %}
-<h1 class="display-4 text-center">Post</h1>
-{% endblock %}
-<!--COMMENT-->
-{% block body1 %}
-<div class="d-flex justify-content-around" style="background-color: white;">
-  <p>
-    Test
-  </p>
+{% extends "templateForm.html" %}
+<!-- FOR CLARITY PURPOSE -->
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- FOR CLARITY PURPOSE -->
+{% block title %} Blog Post {% endblock %}
+<!-- FOR CLARITY PURPOSE -->
+{% block styles %} {{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}" />
+{% endblock %} {% block content %}
+<div class="container">
+  <form class="form-signin" method="POST" action="/login">
+    <h2 class="form-signin-heading">Post a blog article:</h2>
+    {{ form.hidden_tag() }}
+    <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.title) }}
+    <!-- FOR CLARITY PURPOSE -->
+    {{ wtf.form_field(form.content) }}
+    <!-- FOR CLARITY PURPOSE -->
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      Post article
+    </button>
+  </form>
 </div>
-
+<!-- FOR CLARITY PURPOSE -->
 {% endblock %}

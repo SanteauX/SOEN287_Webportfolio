@@ -1,3 +1,4 @@
 username, email, phone, password
 TestTest,test@mail.com,78665789,$2b$12$XalWjRW8Ojp9EpHDhG0hheo9WyCj9nW/BpZ5hk6vzdnPBG4XYwZuG
 Tchoutchou,00r4ever@gmail.com,682521585,$2b$12$DFaP7dyWzB0ghqkN4tuemez6agh1DoEFw5xD/1YSkCCZ2ILHJblXO
+admin,admin@admin.com,123456789,$2b$12$LnlJn5.UtMPUv6Gx6kQ3AOfaeNLIa2X1fKqBrGE/guME8YpXroP2i

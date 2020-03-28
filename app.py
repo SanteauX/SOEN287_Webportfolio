@@ -20,9 +20,9 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 app.config['USE_SESSION_FOR_NEXT'] = True
 
-########################### DATABASE
+#######################################################################################################
+#######################################################################################################
 
-#id, date, author, tags, title, subtitle, content
 ########################### CLASSES ###########################
 class User(UserMixin):
     def __init__(self, username, email, phone, password):
@@ -52,6 +52,10 @@ class ContactForm(FlaskForm):
     title = StringField("Subject", validators = [InputRequired(), Length(min=1, max=80)])
     content = StringField("Message", validators = [InputRequired(), Length(min=1, max=800)])
 
+class PostForm(FlaskForm):
+    title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
+    content = StringField("Subject", validators = [InputRequired(), Length(min=1, max=800000)])
+
 
 #######################################################################################################
 #######################################################################################################
@@ -75,17 +79,6 @@ def find_user(username):
                 return User(*user)
     return None
 
-def create_message(author, email, for_, title, content):
-    print("enter messages")
-    messages = open("data/messages.csv", "r+")
-    message_lines = messages.readlines()
-    id = 1000000+len(message_lines)
-    line = str(id) + "," +str(author) + "," + str(email) + "," + str(for_) + "," + str(datetime.now()) + "," + str(title) + "," + str(content)+"\n"
-    messages.write(line)
-    print("write line: "+line)
-    return True
-
-
 def user_exists(user):
     accounts = open("data/accounts.csv", "r")
     account_lines = accounts.readlines()
@@ -94,7 +87,6 @@ def user_exists(user):
         if user == line[0]:
             return True
     return False
-
 
 ########################### PROJECTS GITHUB
 def get_github_projects():
@@ -116,6 +108,43 @@ def connection(username):
     line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "\n"
     connections.write(line)
     print("write line: "+line)
+    return True
+
+def how_many_users():
+    users = open("data/accounts.csv")
+    user_lines = users.readlines()
+    return len(user_lines)-1
+
+def how_many_messages():
+    messages = open("data/messages.csv")
+    message_lines = messages.readlines()
+    return len(message_lines)-1
+
+def how_many_connections():
+    connections = open("data/connections.csv")
+    connection_line = connections.readlines()
+    return len(connection_line)-1
+
+def create_message(author, email, for_, title, content):
+    print("enter messages")
+    messages = open("data/messages.csv", "r+")
+    message_lines = messages.readlines()
+    id = 1000000+len(message_lines)
+    line = str(id) + "," +str(author) + "," + str(email) + "," + str(for_) + "," + str(datetime.now()) + "," + str(title) + "," + str(content)+"\n"
+    messages.write(line)
+    print("write line: "+line)
+    return True
+
+######################### CREATE A BLOG ARTICLE
+def create_blog_post(author, day, month, year, title, content):
+    print("create blog post")
+    posts = open("blog_posts.csv", "r+")
+    post_lines = post.readlines()
+    id = 1000000+len(post_lines)
+    print("id: "+id)
+    line = str(id) + "," +str(flask_login.current_user.username) + "," + str(day) + "," + str(month) + "," + str(year) + "," + str(title) + "," + str(content)+"\n"
+    print("write line: "+line)
+    posts.write(line)
     return True
 
 #######################################################################################################
@@ -180,15 +209,13 @@ def logout():
     # flash(str(session))
     return redirect('/')
 
-
-
-
+########################### LOG OUT
 @app.route('/account')
 @login_required
-def protected():
-    return render_template('protected.html')
+def account():
+    return render_template('account.html')
 
-
+########################### MESSAGES
 @app.route('/myMessages', methods =['GET', 'POST'])
 @login_required
 def myMessages():
@@ -199,79 +226,18 @@ def myMessages():
                             number = number,
                             url = "messenger.html/")
 
-@app.route('/message')
-@login_required
-def message():
-    return render_template("/messenge.html")
-
-
-def getMessages(username):
-    messages = open("data/messages.csv", "r")
-    message_lines = messages.readlines()
-    messages_for_me = []
-    for i in range(0, len(message_lines)):
-        mm = message_lines[i].split(",")
-        if mm[3] == username:
-            messages_for_me.append(mm)
-    return messages_for_me
-
-#######################################################################################################
-#######################################################################################################
-
-
-@app.route('/')
-def default():
-    return render_template("/home.html")
-
-
-@app.route('/index')
-def index():
-    return render_template("index.html")
-
-@app.route('/post')
+@app.route('/post', methods =['GET', 'POST'])
 @login_required
 def post():
-    return render_template("post.html")
-
-@app.route('/home')
-def home():
-    return render_template("home.html")
-
-@app.route('/whoami')
-def whoami():
-    moi1 = "static/img/Me/moi.jpg"
-    moi2 = "static/img/Me/moi2.jpg"
-    moi3 = "static/img/Me/moi3.jpg"
-    return render_template("whoami.html",
-                           image=moi1,
-                           image2=moi2,
-                           image3=moi3)
-
-@app.route('/skills')
-def skills():
-    return render_template("skills.html")
-
-
-@app.route('/blog')
-def blog():
-    return render_template("blog.html")
-
-@app.route('/projects')
-def projects():
-    project_lines = get_github_projects()
-    return render_template("projects.html",
-                           lines=project_lines[1:],
-                           url="https://github.com/",
-                           number=len(project_lines))
-
-
-@app.route('/cv')
-def cv():
-    return render_template("cv.html")
-
-@app.route('/contact')
-def contact():
-    return render_template("contact.html")
+    form = PostForm()
+    if form.validate_on_submit():
+        create_blog_post(self.username, datetime.now().day, datetime.now().month, datetime.now().year, form.title.data, form.content.data)
+        return render_template("formResponse.html",
+                            title="Blog article posted",
+                            bodyTitle="Your blog article was posted ",
+                            link="/blog",
+                            page="blog")
+    return render_template("/post.html", form=form)
 
 @app.route('/contactForm', methods=['GET', 'POST'])
 def contactForm():
@@ -294,7 +260,70 @@ def contactForm():
                                         page="registration")        
     return render_template("/contactForm.html", form=form)
 
+######################### GET MESSAGES SENT AT YOUR ACCOUNT
+def getMessages(username):
+    messages = open("data/messages.csv", "r")
+    message_lines = messages.readlines()
+    messages_for_me = []
+    for i in range(0, len(message_lines)):
+        mm = message_lines[i].split(",")
+        if mm[3] == username:
+            messages_for_me.append(mm)
+    return messages_for_me
 
+#######################################################################################################
+#######################################################################################################
+
+######################### ROUTES
+
+@app.route('/')
+def default():
+    return render_template("/home.html")
+
+
+@app.route('/index')
+def index():
+    return render_template("index.html")
+
+@app.route('/home')
+def home():
+    return render_template("home.html")
+
+@app.route('/whoami')
+def whoami():
+    moi1 = "static/img/Me/moi.jpg"
+    moi2 = "static/img/Me/moi2.jpg"
+    moi3 = "static/img/Me/moi3.jpg"
+    return render_template("whoami.html",
+                           image=moi1,
+                           image2=moi2,
+                           image3=moi3)
+
+@app.route('/skills')
+def skills():
+    return render_template("skills.html")
+
+@app.route('/blog')
+def blog():
+    return render_template("blog.html")
+
+@app.route('/projects')
+def projects():
+    project_lines = get_github_projects()
+    return render_template("projects.html",
+                           lines=project_lines[1:],
+                           url="https://github.com/",
+                           number=len(project_lines))
+
+@app.route('/cv')
+def cv():
+    return render_template("cv.html")
+
+@app.route('/contact')
+def contact():
+    return render_template("contact.html")
+
+######################### ERROR 404
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", home="/home.html")
