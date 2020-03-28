@@ -91,7 +91,7 @@ def find_user(username):
     with open('data/accounts.csv') as f:
         for user in csv.reader(f):
             if username == user[0]:
-                return User(*user)
+                return User(*user[0:3])
     return None
 
 def user_exists(user):
