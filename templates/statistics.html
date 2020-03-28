@@ -3,17 +3,25 @@
 {% block head %} <title>Statistics & Metrics</title> {% endblock %}
 <!-- FOR CLARITY PURPOSE -->
 {% block script %}
-<script>
+<script style="height: 50%x">
   window.onload = function() {
     var ctx = document.getElementById("myChart").getContext("2d");
     var myChart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
         datasets: [
           {
-            label: "# of Votes",
-            data: [12, 19, 3, 5, 2, 3],
+            label: "# of connections",
+            data: [0, 0, 0, 0, 16, 6, 0],
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -49,7 +57,6 @@
   };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-<script src="javascript/piechart.js"></script>
 {% endblock %}
 <!-- FOR CLARITY PURPOSE -->
 {% block bodyTitle %}
@@ -74,17 +81,3 @@
 <canvas id="myChart" width="400" height="400"></canvas>
 {% endblock %}
 <!-- FOR CLARITY PURPOSE -->
-{% block canvas2 %}
-<canvas id="myChart" width="400" height="400"></canvas>
-{% endblock %}
-
-<script>
-  var ctx = ctx.document.getElementById("graph1").getContext("2d");
-  var data;
-  var options;
-  var config = {
-    type: "line",
-    data: data,
-    options: options
-  };
-</script>

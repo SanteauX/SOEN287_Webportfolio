@@ -159,7 +159,7 @@ def create_blog_post(author, day, month, year, title, content):
     return True
 
 ######################### CREATE 2D CHART MATRIX
-def connection_chart():
+def connection_chart1():
     ocsv = open("data/connections.csv", "r")
     ncsv = open("data/chartjs.csv", "w")
     ocsv_lines = ocsv.readlines()
@@ -179,6 +179,25 @@ def connection_chart():
         csv2+= ","+str(line2[i])
     ncsv.write(csv2)
 
+def connection_chart2():
+    ocsv = open("data/connections.csv", "r")
+    ncsv = open("data/chartjs2.csv", "w")
+    days = "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
+    ncsv.write(days)
+    dayz = days.split(",")
+    lines = ocsv.readlines()
+    line2 = dayz
+    for i in range(0, len(line2)):
+        line2[i] = 0
+    dayz = days.split(",")
+    for i in range(0, len(lines)):
+        line = lines[i].split(",")
+        z = line[3]
+        for j in range(0, len(dayz)):
+            if z == dayz[j]:
+                line2[j]+=1
+    print(dayz)
+    print(line2)
 #######################################################################################################
 #######################################################################################################
 
