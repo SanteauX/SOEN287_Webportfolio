@@ -1,3 +1,7 @@
+import bcrypt
+
+
+
 def matrixChartJS():
     ocsv = open("data/connections.csv", "r")
     ncsv = open("data/chartjs2.csv", "w")
@@ -19,4 +23,16 @@ def matrixChartJS():
     print(dayz)
     print(line2)
 
-fixco()
+def change_password(username, email, phone, password, passwordConfirmation):
+    accounts = open("data/accounts.csv", "r+")
+    account_lines = accounts.readlines()
+    for i in range(1, len(account_lines)):
+        line = account_lines[i].split(",")
+        print(line[0]+ " ==  " + username + "& "+ line[1] +" == "+ email+" & "+ line[2]+" == "+phone)
+        if(line[0] == username and line[1] == email and line[2] == phone and password == passwordConfirmation):
+            salt = bcrypt.gensalt()
+            password = bcrypt.hashpw(password.encode(), salt)
+            line[3] == password
+            print("changed")
+
+change_password("Santeau", "berkham@gmail.com", "45678765434", "newpassword20192090IE","newpassword20192090IE" )

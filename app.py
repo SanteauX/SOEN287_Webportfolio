@@ -44,8 +44,6 @@ class RegisterForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField("username", validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField("password", validators=[InputRequired(), Length(min=12, max=80)])
-    remember = BooleanField("Remember me")
-
 
 class ContactForm(FlaskForm):
     author = StringField("From", validators = [InputRequired(), Length(min=1, max=80)]) 
@@ -59,6 +57,12 @@ class PostForm(FlaskForm):
     title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
     content = StringField("Subject", validators = [InputRequired(), Length(min=1, max=800000)])
 
+class resetPasswordForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired(), Length(min=3, max=50)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    phone = StringField('Phone', validators = [InputRequired(), Length(min=6, max = 15)])
+    password = StringField('New password', validators=[InputRequired(), Length(min=12, max=80)])
+    passwordConfirmation = StringField('Password Confirmation', validators=[InputRequired(), Length(min=12, max=80)])
 
 #######################################################################################################
 #######################################################################################################
@@ -259,6 +263,31 @@ def logout():
     logout_user()
     # flash(str(session))
     return redirect('/')
+
+########################### RESET PASSWORD
+@app.route('/forgotPasswordForm')
+def forgotPassword():
+    form = resetPasswordForm()
+    if form.validate_on_submit():
+        print("test")
+        accounts = open("data/accounts.csv", "r+")
+        account_lines = accounts.readlines()
+        print(len(account_lines))
+        for i in range(1, len(account_lines)):
+            line = account_lines[i].split(",")
+            print(line[0]+ " ==  " + form.username.data + "& "+ line[1] +" == "+ form.email.data+" & "+ line[2]+" == "+form.phone.data)
+            if(line[0] == form.username.data and line[1] == form.email.data and line[2] == form.phone.data and form.password.data == form.passwordConfirmation.data):
+                salt = bcrypt.gensalt()
+                password = bcrypt.hashpw(form.password.data.encode(), salt)
+                line[3] == password
+                return redirect('/login')
+        return render_template("formResponse.html",
+                            title="Reset password",
+                            bodyTitle="Your identity couldn't be confirmed, we can't reset the password ",
+                            link="/login",
+                            page="login")
+    return render_template("forgotPasswordForm.html", form=form)
+
 
 @app.route('/statistics')
 @login_required
