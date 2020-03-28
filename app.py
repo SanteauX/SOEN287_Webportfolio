@@ -150,6 +150,27 @@ def create_blog_post(author, day, month, year, title, content):
     posts.write(line)
     return True
 
+######################### CREATE 2D CHART MATRIX
+def connection_chart():
+    ocsv = open("data/connections.csv", "r")
+    ncsv = open("data/chartjs.csv", "w")
+    ocsv_lines = ocsv.readlines()
+    line = "0"
+    for i in range(1, 24):
+        line+= ","+str(i)
+    ncsv.write(line+"\n")
+    line2 = line.split(",")
+    for i in range(0, len(line2)):
+        line2[i] = 0
+    for i in range(1, len(ocsv_lines)):
+        ocsv_line = ocsv_lines[i].split(",")
+        z = int(ocsv_line[4])
+        line2[z]+=1
+    csv2 = str(line2[0])
+    for i in range(1, len(line2)):
+        csv2+= ","+str(line2[i])
+    ncsv.write(csv2)
+
 #######################################################################################################
 #######################################################################################################
 
