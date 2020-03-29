@@ -296,10 +296,6 @@ def forgotPassword():
                             page="login")
     return render_template("forgotPasswordForm.html", form=form)
 
-
-
-
-
 @app.route('/statistics')
 @login_required
 def statistics():
@@ -307,11 +303,13 @@ def statistics():
     messages = how_many_messages()
     connections = how_many_connections()
     blog_articles = how_many_blog_articles()
+    data = open("data/connections.csv", "r").readlines()
     return render_template('statistics.html', 
                             connections = connections,
                             accounts = users,
                             messages = messages,
                             blog = blog_articles,
+                            data = data[1],
                             chartData = connection_chart2)
 
 @app.route('/post', methods=['GET', 'POST'])
