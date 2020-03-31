@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    {% block head %} {% endblock %}
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  <body class="bodyMain">
+    <!--------------NAVBAR-------------->
+    <nav
+      class="navbar fixed-top navbar-expand-lg navbar-light navbar-transparent"
+      style="background-color: rgb(245, 245, 245);"
+    >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarText"
+        aria-controls="navbarText"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul id="menu-main-nav" class="navbar-nav nav-fill w-100">
+          <li class="nav-item">
+            <a href="home" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="whoami" class="nav-link">Who am I</a>
+          </li>
+          <li class="nav-item">
+            <a href="skills" class="nav-link">Skills</a>
+          </li>
+          <li class="nav-item">
+            <a href="blog" class="nav-link">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a href="projects" class="nav-link">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a href="cv" class="nav-link">CV</a>
+          </li>
+          <li class="nav-item">
+            <a href="contact" class="nav-link">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!--------------/NAVBAR-------------->
+    <!----------------BODY--------------->
+    <div
+      class="jumbotron"
+      style="height: auto; min-height: 100vh; margin-bottom: 0; margin-top: 54px;"
+    >
+      <!-----------SPACE FOR CLARITY----------->
+      {% block bodyTitle %}{% endblock %}
+      <div class="d-flex justify-content-center align-items-center flex-column">
+        <p>{% block SubTitle %}{% endblock %}</p>
+        <table
+          class="table table-light table-striped table-hover table-responsive-md"
+        >
+          <!-----------SPACE FOR CLARITY----------->
+          {% block columns %}
+          <!----------------COLUMNS---------------->
+          {% endblock %}
+          <!-----------SPACE FOR CLARITY----------->
+          <tbody>
+            {% for line in lines %}
+            <tr>
+              {% for item in line[:1] %}
+              <td><a href="{{ url+item }}"> {{ item }}</a></td>
+              {% endfor %}
+              <!-----------SPACE FOR CLARITY----------->
+
+              {% for item in line[1:4] %}
+              <td>{{ item }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <!-----------SPACE FOR CLARITY----------->
+    </div>
+    <!---------------/BODY--------------->
+    <!--------------FOOTER-------------->
+    <footer class="footerBox">
+      <div class="d-flex justify-content-center">
+        <div>
+          <label style="color: white;"
+            >If you want to receive news from me:</label
+          >
+          <form class="d-flex flex-wrap">
+            <input
+              class="textbox"
+              type="text"
+              text="email"
+              placeholder=" Enter your email right here"
+            />
+            <button type="button" style="margin-left: 5px; margin-top: 5px;">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+      <div style="margin-left: 40px; color: purple">
+        {% if current_user.is_authenticated %}
+        <p>You are connected as {{ current_user.id }}!</p>
+        {% endif %}
+      </div>
+    </footer>
+  </body>
+</html>

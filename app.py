@@ -227,9 +227,20 @@ def return_message(id):
     for i in range(1, len(message_lines)):
         line = message_lines[i].split(",")
         if str(line[0]) == str(id):
-                print("Found")
-                return message_lines[i]
+            return message_lines[i]
     return False
+
+
+######################### FIND & RETURN EMSSAGE
+def return_article(id):
+    articles = open("data/blog_posts.csv")
+    article_lines = articles.readlines()
+    for i in range(1, len(article_lines)):
+        line = article_lines[i].split(",")
+        if str(line[0]) == str(id):
+                return article_lines[i]
+    return False
+
 
 #######################################################################################################
 #######################################################################################################
@@ -361,7 +372,34 @@ def messenger(messageID):
     message = return_message(messageID).split(",")
     print(message)
     return render_template("messenger.html", message=message)
-    #return render_template("messenger.html")
+
+########################### BLOG
+def return_blog(id):
+    blog = open("data/blog_posts.csv")
+    blog_lines = blog.readlines()
+    for i in range(1, len(blog_lines)):
+        line = blog_lines[i].split(",")
+        print(line)
+        return line
+    return False
+
+def get_blogs():
+    blog = open("data/blog_posts.csv")
+    blog_lines = blog.readlines()
+    for i in range(1, len(blog_lines)):
+        line = blog_lines[i].split(",")
+        line[2] = str(line[2])+"/"+str(line[3])+"/"+str(line[4])
+        line.pop(3)
+        line.pop(3)
+        line = line[0]+","+line[1]+","+line[2]+","+line[4]
+        blog_lines[i] = line.split(",")
+    return blog_lines
+
+@app.route('/article/<articleID>')
+def blog_article(articleID):
+    article = return_article(articleID).split(",")
+    print(article)
+    return render_template("article.html/", article=article)
 
 
 ########################### MESSAGE SOMEBODY
@@ -430,7 +468,13 @@ def skills():
 
 @app.route('/blog')
 def blog():
-    return render_template("blog.html")
+    blog_lines = get_blogs()
+    for i in range(0, len(blog_lines)):
+        print(blog_lines[i])
+    return render_template("blog.html",
+                            lines=blog_lines[1:],
+                            url = "/article/",
+                            number=len(blog_lines))
 
 @app.route('/projects')
 def projects():

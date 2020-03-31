@@ -1,35 +1,15 @@
-def return_me(id, username):
-    messages = open("data/messages.csv")
-    message_lines = messages.readlines()
-    for i in range(1, len(message_lines)):
-        line = message_lines[i].split(",")
-        print("\n")
-        print(line)
-        #print(str(line[0])+" == "+str(id)+ " and "+str(line[3])+" == "+str(username))
-        if str(line[0]) == str(id):
-            print(str(line[0])+" == "+str(id)+" : True\n")
-            print(str(line[3])+" == "+str(username)+" : ?")
-            print(len(str(line[3])))
-            print(len(str(username)))
-            if(line[4] == username):
-                print(str(line[3])+" == "+str(username)+" : True\n")
-                print("Found")
-                return message_lines[i]
+def get_blogs():
+    blog = open("data/blog_posts.csv")
+    blog_lines = blog.readlines()
+    for i in range(1, len(blog_lines)):
+        line = blog_lines[i].split(",")
+        line[2] = str(line[2])+"/"+str(line[3])+"/"+str(line[4])
+        line.pop(3)
+        line.pop(3)
+        line = line[0]+","+line[1]+","+line[2]+","+line[3]+","+line[4]+","+line[5]
+        blog_lines[i] = line.split(",")
+    return blog_lines
 
-    return False
-id = 1000008
-username = "Jiji"
-
-def return_message(id):
-    messages = open("data/messages.csv")
-    message_lines = messages.readlines()
-    for i in range(1, len(message_lines)):
-        line = message_lines[i].split(",")
-        if str(line[0]) == str(id):
-                print("Found")
-                return message_lines[i]
-
-    return False
-
-
-print(return_message(id))
+blogs = get_blogs()
+for i in range(0, len(blogs)):
+    print(blogs[i])

@@ -1,18 +1,38 @@
-{% extends 'templateDisplay.html' %}
-<!-- FOR CLARITY PURPOSE -->
-{% block head %}
+{% extends 'templateBlog.html' %} {% block head %}
 <title>Blog</title>
 {% endblock %}
-<!-- FOR CLARITY PURPOSE -->
+<!--COMMENT-->
 {% block bodyTitle %}
-<h1 class="display-4 text-center">My Blog</h1>
+<h1 class="display-4 text-center">Articles</h1>
 {% endblock %}
-<!-- FOR CLARITY PURPOSE -->
+<!--COMMENT-->
+{% block SubTitle %}
+<p>{{ number}} articles</p>
+{% endblock %}
+{% block columns %}
+<thead>
+  <tr>
+    <th>ID</th>
+    <th>Author</th>
+    <th>Creation Date</th>
+    <th>Title</th>
+  </tr>
+</thead>
+
+{% endblock %}
+
+<!--COMMENT-->
 {% block body1 %}
-<div class="d-flex justify-content-center" style="margin-top: 20%;">
-  <button class="btn btn-primary">
-    <span class="spinner-border spinner-border-sm"></span>
-    This part of the website is still in construction
-  </button>
+
+<div class="container">
+  <ul class ="colection with-header">
+
+    {% for article in lines %}
+      {% for element in article %}
+      <li>{{article[element]}}</li>
+    {% endfor %}    {% endfor %}
+
+  </il>
 </div>
+
 {% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+<!--SPACE FOR CLARITY-->
+{% block head %} <title>articles</title>{% endblock %}
+<!--SPACE FOR CLARITY-->
+{% block bodyTitle %}
+<h1 class="display-4 text-center">article</h1>
+{% endblock %}
+<!--SPACE FOR CLARITY-->
+{% block body1 %}
+
+<div class="container">
+  <ul class="colection with-header">
+    <li>
+      Title: {{article[6]}}
+    </li>
+    <li>
+      Author: {{article[1]}}
+    </li>
+    <li>
+      Date: {{article[2]}}/{{article[3]}}/{{article[4]}}
+    </li>
+    <li>
+      Content: {{article[7]}}
+    </li>
+  </ul>
+</div>
+
+{% endblock %}
