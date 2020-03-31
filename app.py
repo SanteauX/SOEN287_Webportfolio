@@ -91,7 +91,7 @@ def find_user(username):
     with open('data/accounts.csv') as f:
         for user in csv.reader(f):
             if username == user[0]:
-                return User(*user)
+                return User(*user[0:4])
     return None
 
 def user_exists(user):
@@ -205,7 +205,7 @@ def connection_chart2():
     print(dayz)
     print(line2)
 
-
+######################### CHANGE PASSWORD/FORTGOT PASSWORD
 def change_password(username, email, phone, password, passwordConfirmation):
     accounts = open("data/accounts.csv", "r+")
     account_lines = accounts.readlines()
@@ -217,6 +217,18 @@ def change_password(username, email, phone, password, passwordConfirmation):
             password = bcrypt.hashpw(password.encode(), salt)
             line[3] == password
             return True
+    return False
+
+
+######################### FIND & RETURN EMSSAGE
+def return_message(id):
+    messages = open("data/messages.csv")
+    message_lines = messages.readlines()
+    for i in range(1, len(message_lines)):
+        line = message_lines[i].split(",")
+        if str(line[0]) == str(id):
+                print("Found")
+                return message_lines[i]
     return False
 
 #######################################################################################################
@@ -336,11 +348,21 @@ def account():
 @login_required
 def myMessages():
     lines = getMessages(session['username'])
-    number = len(lines) - 1
+    number = len(lines)
     return render_template("myMessages.html",
                             lines = lines,
                             number = number,
-                            url = "messenger.html/")
+                            url = "messenger/")
+
+########################### MESSAGE
+@app.route('/messenger/<messageID>', methods =['GET', 'POST'])
+@login_required
+def messenger(messageID):
+    message = return_message(messageID).split(",")
+    print(message)
+    return render_template("messenger.html", message=message)
+    #return render_template("messenger.html")
+
 
 ########################### MESSAGE SOMEBODY
 @app.route('/contactForm', methods=['GET', 'POST'])
@@ -412,11 +434,14 @@ def blog():
 
 @app.route('/projects')
 def projects():
+    #if myProjects.scrapeMyProjects():
     project_lines = get_github_projects()
     return render_template("projects.html",
-                           lines=project_lines[1:],
-                           url="https://github.com/",
-                           number=len(project_lines))
+                        lines=project_lines[1:],
+                        url="https://github.com/",
+                        number=len(project_lines))
+    #else:
+    #    print("Big Problem")
 
 @app.route('/cv')
 def cv():

@@ -1,4 +1,4 @@
-import urllib
+import urllib.request
 import json
 import unicodedata
 import requests
@@ -41,6 +41,8 @@ class repo_github(object):
 def scraping_github(url):
     # Scraping of my github repo
     # url = "https://api.github.com/users/SanteauX/repos"
+    #
+    #
     response = urllib.urlopen(url)
     data = json.loads(response.read())
     return data
@@ -76,9 +78,17 @@ def test_lines(lines):
     for i in range(0, len(liste)):
         print(liste[i].get_line())
 
+
+def scrapeMyProjects():
+    data = scraping_github(url)
+    liste = obj_github(data)
+    write_csv(liste)
+    return True
+     
+
 data = scraping_github(url)
 liste = obj_github(data)
 write_csv(liste)
-#test_lines(liste)
+test_lines(liste)
 
 

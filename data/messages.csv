@@ -5,3 +5,5 @@ id, author, email, for, date, title, content
 1000004,Bongo,mail@com.com,TestTest,2020-03-25 00:18:41.105321,Test,Bonjour
 1000005,oqndddz,bhnbih@mail.com,TestTest,2020-03-25 00:19:28.782486,mailTest,test
 1000006,admin,admin@admin.com,Tchoutchou,2020-03-27 20:54:05.122676,testtest,adminadminadminadminadmin
+1000007,Jiji,Jiji@mail.com,Tchoutchou,2020-03-30 21:36:43.458888,JijiJijiJijiJiji,JijiJijiJijiJijiJijiJijiJijiJijiJijiJijiJijiJijiJijiJiji
+1000008,Jiji,Jiji@mail.com,Jiji,2020-03-30 21:37:46.590069,Test send message to myself,JijiJijiJijiJiji Test Message
