@@ -213,31 +213,29 @@ def change_password(username, email, phone, password, passwordConfirmation):
         line = account_lines[i].split(",")
         print(line[0]+ " ==  " + username + " & "+ line[1] +" == "+ email+" & "+ line[2]+" == "+phone)
         if(line[0] == username and line[1] == email and line[2] == phone and password == passwordConfirmation):
-            salt = bcrypt.gensalt()
-            print("new password: "+password)
-            newpassword = bcrypt.hashpw(password.encode(), salt)
-            print("Crypted password: "+str(newpassword))
-            print("Old password from database: "+line[3])
-            line[3] == newpassword
-            print("New Password from database: "+line[3])
+            change_password_changeline(username, email, phone, password, line[4], line[5], line[6])
             return True
     return False
 
 
 def change_password_changeline(username, email, phone, password, day, month, year):
-    line = username+","+email+","+str(phone)+","+password+","+str(day)+","+str(month)+","+str(year)
+    salt = bcrypt.gensalt()
+    newpassword = bcrypt.hashpw(password.encode(), salt)
+    line = username+","+email+","+str(phone)+","+newpassword.decode()+","+str(day)+","+str(month)+","+str(year)
     accounts = []
     a = open("data/accounts.csv", "r")
     lines = a.readlines()
-    for i in range(1, len(lines)):
+    for i in range(0, len(lines)):
         x = lines[i].split(",")
-        if(x[0] != username):
+        if (x[0] != username):
             accounts.append(lines[i])
     accounts.append(line)
+    print(accounts)
     a.close()
     a = open("data/accounts.csv", "w")
     for i in range(0, len(accounts)):
-        a.write(accounts[i]+"\n")
+        a.write(accounts[i])
+    a.close()
 
 ######################### FIND & RETURN EMSSAGE
 def return_message(id):
@@ -250,7 +248,7 @@ def return_message(id):
     return False
 
 
-######################### FIND & RETURN EMSSAGE
+######################### FIND & RETURN MESSAGE
 def return_article(id):
     articles = open("data/blog_posts.csv")
     article_lines = articles.readlines()
