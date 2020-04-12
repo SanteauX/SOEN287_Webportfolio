@@ -215,14 +215,29 @@ def change_password(username, email, phone, password, passwordConfirmation):
         if(line[0] == username and line[1] == email and line[2] == phone and password == passwordConfirmation):
             salt = bcrypt.gensalt()
             print("new password: "+password)
-            password = bcrypt.hashpw(password.encode(), salt)
-            print("Crypted password: "+password)
+            newpassword = bcrypt.hashpw(password.encode(), salt)
+            print("Crypted password: "+str(newpassword))
             print("Old password from database: "+line[3])
-            line[3] == password
+            line[3] == newpassword
             print("New Password from database: "+line[3])
             return True
     return False
 
+
+def change_password_changeline(username, email, phone, password, day, month, year):
+    line = username+","+email+","+str(phone)+","+password+","+str(day)+","+str(month)+","+str(year)
+    accounts = []
+    a = open("data/accounts.csv", "r")
+    lines = a.readlines()
+    for i in range(1, len(lines)):
+        x = lines[i].split(",")
+        if(x[0] != username):
+            accounts.append(lines[i])
+    accounts.append(line)
+    a.close()
+    a = open("data/accounts.csv", "w")
+    for i in range(0, len(accounts)):
+        a.write(accounts[i]+"\n")
 
 ######################### FIND & RETURN EMSSAGE
 def return_message(id):
