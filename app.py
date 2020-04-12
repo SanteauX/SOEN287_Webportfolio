@@ -63,7 +63,7 @@ class ContactForm(FlaskForm):
 class PostForm(FlaskForm):
     bloggername = StringField("Bloggername", validators = [InputRequired(), Length(min=1, max=80)])
     title = StringField("Title", validators = [InputRequired(), Length(min=1, max=80)])
-    content = StringField("Subject", validators = [InputRequired(), Length(min=1, max=800000)])
+    content = StringField("Content", validators = [InputRequired(), Length(min=1, max=800000)])
 
 class resetPasswordForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=3, max=50)])
@@ -211,11 +211,15 @@ def change_password(username, email, phone, password, passwordConfirmation):
     account_lines = accounts.readlines()
     for i in range(1, len(account_lines)):
         line = account_lines[i].split(",")
-        print(line[0]+ " ==  " + username + "& "+ line[1] +" == "+ email+" & "+ line[2]+" == "+phone)
+        print(line[0]+ " ==  " + username + " & "+ line[1] +" == "+ email+" & "+ line[2]+" == "+phone)
         if(line[0] == username and line[1] == email and line[2] == phone and password == passwordConfirmation):
             salt = bcrypt.gensalt()
+            print("new password: "+password)
             password = bcrypt.hashpw(password.encode(), salt)
+            print("Crypted password: "+password)
+            print("Old password from database: "+line[3])
             line[3] == password
+            print("New Password from database: "+line[3])
             return True
     return False
 
@@ -305,12 +309,16 @@ def logout():
     return redirect('/')
 
 ########################### RESET PASSWORD
-@app.route('/forgotPasswordForm')
+@app.route('/forgotPasswordForm', methods=['GET', 'POST'])
 def forgotPassword():
     form = resetPasswordForm()
     if form.validate_on_submit():
         if change_password(form.username.data, form.email.data, form.phone.data, form.password.data, form.passwordConfirmation.data):
-            return redirect('/login')
+            return render_template("formResponse.html",
+                            title="Reset password",
+                            bodyTitle="Your password was reseted ",
+                            link="/login",
+                            page="login")
         else:
             return render_template("formResponse.html",
                             title="Reset password",
