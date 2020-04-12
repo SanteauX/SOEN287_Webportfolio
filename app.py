@@ -217,7 +217,6 @@ def change_password(username, email, phone, password, passwordConfirmation):
             return True
     return False
 
-
 def change_password_changeline(username, email, phone, password, day, month, year):
     salt = bcrypt.gensalt()
     newpassword = bcrypt.hashpw(password.encode(), salt)
@@ -343,6 +342,8 @@ def forgotPassword():
 @app.route('/statistics')
 @login_required
 def statistics():
+    connection_chart1()
+    connection_chart2()
     users = how_many_users()
     messages = how_many_messages()
     connections = how_many_connections()
@@ -412,7 +413,7 @@ def get_blogs():
         line[2] = str(line[2])+"/"+str(line[3])+"/"+str(line[4])
         line.pop(3)
         line.pop(3)
-        line = line[0]+","+line[1]+","+line[2]+","+line[4]
+        line = line[0]+","+line[1]+","+line[2]+","+line[3]
         blog_lines[i] = line.split(",")
     return blog_lines
 
