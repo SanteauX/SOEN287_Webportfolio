@@ -134,6 +134,15 @@ def how_many_connections():
     connection_line = connections.readlines()
     return len(connection_line)-1
 
+def get_data_connections_hours():
+    connections = open("data/chartjs.csv")
+    connections_hours = connections.readlines()
+    c = connections_hours[1].split(",")
+    for i in range(0, len(c)):
+        c[i] = int(c[i])
+    print(c)
+    return c
+
 def how_many_blog_articles():
     blog_articles = open("data/blog_posts.csv")
     blog_article_lines = blog_articles.readlines()
@@ -347,6 +356,7 @@ def statistics():
     users = how_many_users()
     messages = how_many_messages()
     connections = how_many_connections()
+    data_hours = get_data_connections_hours()
     blog_articles = how_many_blog_articles()
     data = open("data/connections.csv", "r").readlines()
     return render_template('statistics.html', 
@@ -355,7 +365,8 @@ def statistics():
                             messages = messages,
                             blog = blog_articles,
                             data = data[1],
-                            chartData = connection_chart2)
+                            chartData = connection_chart2,
+                            listhours = data_hours)
 
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
