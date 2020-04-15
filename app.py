@@ -111,6 +111,19 @@ def get_github_projects():
         project_lines[i] = project_lines[i].split(",")
     return project_lines
 
+########################### FIX DATE PROJECT GITHUB
+def remove_time(time):
+    string = ""
+    for i in range(0, len(time)):
+        if(time[i] == "T"):
+            return string
+        elif(time[i] == "-"):
+            string+= "/"
+        else:
+            string+=time[i]
+    return string
+
+
 ########################### STATISTICS
 def connection(username):
     connections = open("data/connections.csv", "a+")
@@ -513,6 +526,9 @@ def blog():
 def projects():
     #if myProjects.scrapeMyProjects():
     project_lines = get_github_projects()
+    for i in range(0, len(project_lines)):
+        project_lines[i][3] = remove_time(project_lines[i][3])
+        print(project_lines[i])
     return render_template("projects.html",
                         lines=project_lines[1:],
                         url="https://github.com/",
