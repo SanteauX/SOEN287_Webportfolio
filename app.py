@@ -268,7 +268,6 @@ def return_message(id):
             return message_lines[i]
     return False
 
-
 ######################### FIND & RETURN MESSAGE
 def return_article(id):
     articles = open("data/blog_posts.csv")
@@ -278,7 +277,6 @@ def return_article(id):
         if str(line[0]) == str(id):
                 return article_lines[i]
     return False
-
 
 #######################################################################################################
 #######################################################################################################
@@ -361,6 +359,7 @@ def forgotPassword():
                             page="login")
     return render_template("forgotPasswordForm.html", form=form)
 
+########################### STATISTICS
 @app.route('/statistics')
 @login_required
 def statistics():
@@ -381,6 +380,7 @@ def statistics():
                             chartData = connection_chart2,
                             listhours = data_hours)
 
+########################### CREATE A BLOG ARTICLE
 @app.route('/post', methods=['GET', 'POST'])
 @login_required
 def post():
