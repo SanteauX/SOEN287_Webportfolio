@@ -412,7 +412,7 @@ def return_blog(id):
     blog_lines = blog.readlines()
     for i in range(1, len(blog_lines)):
         line = blog_lines[i].split(",")
-        print(line)
+        #print(line)
         return line
     return False
 
@@ -431,7 +431,7 @@ def get_blogs():
 @app.route('/article/<articleID>')
 def blog_article(articleID):
     article = return_article(articleID).split(",")
-    print(article)
+    #print(article)
     return render_template("article.html/", article=article)
 
 
@@ -502,12 +502,12 @@ def skills():
 @app.route('/blog')
 def blog():
     blog_lines = get_blogs()
-    for i in range(0, len(blog_lines)):
-        print(blog_lines[i])
+    #for i in range(0, len(blog_lines)):
+        #print(blog_lines[i])
     return render_template("blog.html",
                             lines=blog_lines[1:],
                             url = "/article/",
-                            number=len(blog_lines))
+                            number=len(blog_lines)-1)
 
 @app.route('/projects')
 def projects():
