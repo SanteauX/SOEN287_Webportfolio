@@ -1,4 +1,3 @@
-myProjects.py uses the GitHub API to get my projects to the .csv
 
 
 WHAT IS ON MY WEBSITE
@@ -13,7 +12,8 @@ WHAT IS ON MY WEBSITE
     When connected you can see in the footer in purple text if you're connected or not
 
 - LOG OUT
---> /logout
+--> /logout in the URL
+    or go to /account and click on logout
     Will disconnect the current user
 
 - SEND A MESSAGE TO SOMEBODY WITH A USER ACCOUNT
@@ -25,7 +25,7 @@ WHAT IS ON MY WEBSITE
     --> /myMessages
     Will look in messages.csv for messages with the user as the destination of the message
 
-- SEE MY PROJECTS
+- SEE MY PROJECTS (HUGO JONCOUR'S PROJECTS / GITHUB: @SanteauX)
 --> /projects (link in navbar)
     Dynamic list of projects created with the Github API located in data/github_projects.csv
 
@@ -41,7 +41,13 @@ WHAT IS ON MY WEBSITE
     Write article, click on "post article"
     it will appear in /blog
 
-REQUIREMENTS OF THE ASSIGNMENT:
+OTHER:
+
+myProjects.py uses the GitHub API to get my projects to the .csv
+histograms.js is a work in progress
+
+
+######################################## REQUIREMENTS OF THE ASSIGNMENT: ########################################
 
 All your forms should be defined as subclasses of FlaskForm, and should have properly defined validators. 
 
