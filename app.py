@@ -10,7 +10,6 @@ from flask_wtf import FlaskForm
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
-
 ########################### CONFIG
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
