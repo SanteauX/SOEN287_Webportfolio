@@ -1,24 +1,22 @@
-All your forms should be defined as subclasses of FlaskForm
---> They are
+All your forms should be defined as subclasses of FlaskForm, and should have properly defined validators. 
 
 and should have properly defined validators.
 --> Validtors are either part of the form or in the function creating the data send to csv, but are checked anyway
 
-Your forms should be handled properly, by defining a route accepting GET and POST methods,
---> They do
+Your forms should be handled properly, by defining a route accepting GET and POST methods, and you should use the POST/REDIRECT/GET pattern when the form data validates (as shown in class).
+--> They are
 
 and you should use the POST/REDIRECT/GET pattern when the form data validates (as shown in class).
+--> They do. Exemple: /login & /logout
 
 
-Your web site data should be stored in files, located in the data subfolder. 
-The data should in CSV or JSON formats.
+Your web site data should be stored in files, located in the data subfolder. The data should in CSV or JSON formats.
 --> accounts.csv
 --> blog_posts.csv
 --> github_projects.csv
 --> messages.csv
 
 Your web site should contain:
-
             At least 2 forms:
             with at least one of these forms which must be significantly different 
             from the ones included in the examples covered in class and in the tutorials.
@@ -30,8 +28,9 @@ Your web site should contain:
             At least 1 table and at least 1 list created dynamically from data stored in a local file
             or a local SQLite DB (or some other DB). These pages can be, or not, directly connected to your forms.
             --> myMessages          1
-            --> projects (github)   2
-
+            --> blog                2
+            --> projects (github)   3
+            --> Connections (chart) 4
 
             A way to support user logins:
             --> it does
@@ -82,7 +81,7 @@ Some other advanced feature, going beyond the basic examples presented in class 
                     ------------------> Github
 
                     More advanced session mangement (tracking, user statistics, ...)
-                    ------------------> /statistics includes connection/day of the week & connection/hour
+                    ------------------> /statistics (connection/hour)
 
                     Role-based access control or other more adbvanced user permissions management
                     ------------------> Only registered users are allowed to post on the blog section
