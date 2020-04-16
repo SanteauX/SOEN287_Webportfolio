@@ -128,7 +128,7 @@ def connection(username):
     connections = open("data/connections.csv", "a+")
     line = str(day) + "," + str(month) + "," + str(year) + "," + str(weekday) + "," + str(hour) + "," + username + "\n"
     connections.write(line)
-    print("write line: "+line)
+    #print("write line: "+line)
     return True
 
 def how_many_users():
@@ -152,27 +152,54 @@ def get_data_connections_hours():
     c = connections_hours[1].split(",")
     for i in range(0, len(c)):
         c[i] = int(c[i])
-    print(c)
+    #print(c)
     return c
 
+######################### FOR % OF CONNECTIONS AT PEAK TIME
+def getMostConnections():
+    connections = open("data/chartjs.csv")
+    connections_hours = connections.readlines()
+    c = connections_hours[1].split(",")
+    #print(c)
+    biggest = c[0]
+    for i in range(0, len(c)):
+        #print("c[i] == "+c[i]+" vs "+biggest)
+        if int(c[i]) > int(biggest):
+            #print("c[i] = "+biggest)
+            biggest = c[i]
+    return int(biggest)
+
+######################### AT WHAT TIME MOST CONNECTIONS HAPPEN /statistics
+def mostConnectionsTime():
+    connections = open("data/chartjs.csv")
+    connections_hours = connections.readlines()
+    c = connections_hours[1].split(",")
+    biggest = c[0]
+    for i in range(0, len(c)):
+        if int(c[i]) > int(biggest):
+            biggest = i
+    return int(connections_hours[0][i])
+
+######################### FOR HOW MANY BLOG ARTICLES /BLOG
 def how_many_blog_articles():
     blog_articles = open("data/blog_posts.csv")
     blog_article_lines = blog_articles.readlines()
     return len(blog_article_lines)-1
 
+######################### /CONTACT SEND A MESSAGE
 def create_message(author, email, for_, title, content):
-    print("enter messages")
+    #print("enter messages")
     messages = open("data/messages.csv", "r+")
     message_lines = messages.readlines()
     id = 1000000+len(message_lines)
     line = str(id) + "," +str(author) + "," + str(email) + "," + str(for_) + "," + str(datetime.now()) + "," + str(title) + "," + str(content)+"\n"
     messages.write(line)
-    print("write line: "+line)
+    #print("write line: "+line)
     return True
 
 ######################### CREATE A BLOG ARTICLE
 def create_blog_post(author, day, month, year, title, content):
-    print("create blog post")
+    #print("create blog post")
     posts = open("data/blog_posts.csv", "r+")
     post_lines = posts.readlines()
     id = 1000000+len(post_lines)
@@ -181,7 +208,7 @@ def create_blog_post(author, day, month, year, title, content):
     month = now.month
     day = now.day
     line = str(id) + "," +str(author) + "," + str(day) + "," + str(month) + "," + str(year) + "," + str(title) + "," + str(content)+"\n"
-    print("write line: "+line)
+    #print("write line: "+line)
     posts.write(line)
     return True
 
@@ -223,8 +250,8 @@ def connection_chart2():
         for j in range(0, len(dayz)):
             if z == dayz[j]:
                 line2[j]+=1
-    print(dayz)
-    print(line2)
+    #print(dayz)
+    #print(line2)
 
 ######################### CHANGE PASSWORD/FORTGOT PASSWORD
 def change_password(username, email, phone, password, passwordConfirmation):
@@ -250,7 +277,7 @@ def change_password_changeline(username, email, phone, password, day, month, yea
         if (x[0] != username):
             accounts.append(lines[i])
     accounts.append(line)
-    print(accounts)
+    #print(accounts)
     a.close()
     a = open("data/accounts.csv", "w")
     for i in range(0, len(accounts)):
@@ -366,10 +393,12 @@ def statistics():
     connection_chart1()
     connection_chart2()
     users = how_many_users()
+    mostCo = getMostConnections()
     messages = how_many_messages()
+    mostCoTime = mostConnectionsTime()
     connections = how_many_connections()
-    data_hours = get_data_connections_hours()
     blog_articles = how_many_blog_articles()
+    data_hours = get_data_connections_hours()
     data = open("data/connections.csv", "r").readlines()
     return render_template('statistics.html', 
                             connections = connections,
@@ -378,7 +407,9 @@ def statistics():
                             blog = blog_articles,
                             data = data[1],
                             chartData = connection_chart2,
-                            listhours = data_hours)
+                            listhours = data_hours,
+                            mostConnections = str(mostCo),
+                            mostConnectionsTime = mostCoTime)
 
 ########################### CREATE A BLOG ARTICLE
 @app.route('/post', methods=['GET', 'POST'])
@@ -416,7 +447,7 @@ def myMessages():
 @login_required
 def messenger(messageID):
     message = return_message(messageID).split(",")
-    print(message)
+    #print(message)
     return render_template("messenger.html", message=message)
 
 ########################### BLOG
@@ -446,7 +477,6 @@ def blog_article(articleID):
     article = return_article(articleID).split(",")
     #print(article)
     return render_template("article.html/", article=article)
-
 
 ########################### MESSAGE SOMEBODY
 @app.route('/contactForm', methods=['GET', 'POST'])
@@ -528,7 +558,7 @@ def projects():
     project_lines = get_github_projects()
     for i in range(0, len(project_lines)):
         project_lines[i][3] = remove_time(project_lines[i][3])
-        print(project_lines[i])
+        #print(project_lines[i])
     return render_template("projects.html",
                         lines=project_lines[1:],
                         url="https://github.com/",
@@ -548,7 +578,6 @@ def contact():
 @app.errorhandler(404)
 def not_found(e):
     return render_template("404.html", home="/home.html")
-
 
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug=True)
