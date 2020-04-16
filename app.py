@@ -319,11 +319,12 @@ def login():
         if user and bcrypt.checkpw(form.password.data.encode(), user.password.encode()):
             login_user(user)
             connection(form.username.data)
-            return render_template("formResponse.html",
-                                    title="Logged in",
-                                    bodyTitle="Welcome "+form.username.data,
-                                    link="/home",
-                                    page="home")
+            return redirect('/account')
+            # return render_template("formResponse.html",
+            #                         title="Logged in",
+            #                         bodyTitle="Welcome "+form.username.data,
+            #                         link="/home",
+            #                         page="home")
         else:
             return render_template("formResponse.html",
                                     title="Login Error",
